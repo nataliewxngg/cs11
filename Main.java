@@ -1,22 +1,19 @@
 import java.util.*;
 
 public class Main {
-  // Given 2 positive int values, return the larger value that is in the range 10..20 inclusive, 
-  // or return 0 if neither is in that range.
-  public static int max1020(int a, int b) {
-    int maxVal = 0;
-
-    if (a>=10 && a<=20) {
-      if (a>maxVal) {
-        maxVal = a;
+  //Given a number n, return true if n is in the range 1..10, inclusive. 
+  //Unless outsideMode is true, in which case return true if the number is less or equal to 1, or greater or equal to 10.
+  public static boolean in1To10(int n, boolean outsideMode) {
+    if (outsideMode == false) {
+      if (n >= 1 && n <= 10) {
+        return true;
       }
     }
-    if (b>=10 && b<=20) {
-      if (b>maxVal) {
-        maxVal = b;
-      }
+    if (n <= 1 || n >= 10) {
+      return true;
+    } else {
+      return false;
     }
-    return maxVal;
   }
 
   public static void main(String[] args) {
@@ -24,9 +21,11 @@ public class Main {
 
     int a = in.nextInt();
     int b = in.nextInt();
-    int c = in.nextInt();
+    // int c = in.nextInt();
 
-    max1020(a, b);
+    boolean d = in.nextBoolean();
+
+    in1To10(a,d);
     in.close();
   }
 }
