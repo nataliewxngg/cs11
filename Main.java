@@ -1,19 +1,12 @@
 import java.util.*;
 
 public class Main {
-  //Given a number n, return true if n is in the range 1..10, inclusive. 
-  //Unless outsideMode is true, in which case return true if the number is less or equal to 1, or greater or equal to 10.
-  public static boolean in1To10(int n, boolean outsideMode) {
-    if (outsideMode == false) {
-      if (n >= 1 && n <= 10) {
-        return true;
-      }
-    }
-    if (n <= 1 || n >= 10) {
-      return true;
-    } else {
-      return false;
-    }
+  //0=Sun, 1=Mon, 2=Tue, ...6=Sat, and a boolean indicating if we are on vacation, 
+  //return a string of the form "7:00" indicating when the alarm clock should ring. 
+  //Weekdays, the alarm should be "7:00" and on the weekend it should be "10:00". 
+  //Unless we are on vacation -- then on weekdays it should be "10:00" and weekends it should be "off".
+  public static boolean specialEleven(int n) {
+    
   }
 
   public static void main(String[] args) {
@@ -21,11 +14,11 @@ public class Main {
 
     int a = in.nextInt();
     int b = in.nextInt();
-    // int c = in.nextInt();
+    int c = in.nextInt();
 
     boolean d = in.nextBoolean();
 
-    in1To10(a,d);
+    specialEleven(a);
     in.close();
   }
 }
