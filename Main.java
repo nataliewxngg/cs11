@@ -1,12 +1,17 @@
 import java.util.*;
 
-public class Main {
-  //0=Sun, 1=Mon, 2=Tue, ...6=Sat, and a boolean indicating if we are on vacation, 
-  //return a string of the form "7:00" indicating when the alarm clock should ring. 
-  //Weekdays, the alarm should be "7:00" and on the weekend it should be "10:00". 
-  //Unless we are on vacation -- then on weekdays it should be "10:00" and weekends it should be "off".
-  public static boolean specialEleven(int n) {
-    
+public class Main { 
+  //If the numbers are all different from each other, the result is 0. If all of the numbers are the same, the result is 20. If two of the numbers are the same, the result is 10.
+  public static int greenTicket(int a, int b, int c) {
+    if (a == b && b == c) {
+      return 20;
+    }
+    if (a == b || b == c || c == a) {
+      return 10;
+    }
+    else {
+      return 0;
+    }
   }
 
   public static void main(String[] args) {
@@ -18,7 +23,7 @@ public class Main {
 
     boolean d = in.nextBoolean();
 
-    specialEleven(a);
+    greenTicket(a,b,c);
     in.close();
   }
 }
