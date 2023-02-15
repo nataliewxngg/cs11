@@ -6,7 +6,26 @@ public class Main {
   //Return true if it is possible to make the goal by choosing from the given bricks. 
   //This is a little harder than it looks and can be done without any loops. 
   public static boolean makeBricks(int small, int big, int goal) {
+    // int sum = 0;
+    // // small = 1 inch, big - 5 inches
+    // for (int i = 0; i < big; i++) {
+    //   sum = sum + 5;
+    //   for (int y = 0; y < small; y++) {
+    //     sum++;
+
+    //     if (sum == goal) {
+    //       break;
+    //     }
+    //   }
+    // }
     
+    // if (sum == goal) {
+    //   return true;
+    // }
+    // else {
+    //   return false;
+    // }
+
   }
 
   public static void main(String[] args) {
