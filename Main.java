@@ -1,11 +1,11 @@
 import java.util.*;
 
 public class Main {
-  //0=Sun, 1=Mon, 2=Tue, ...6=Sat, and a boolean indicating if we are on vacation, 
-  //return a string of the form "7:00" indicating when the alarm clock should ring. 
-  //Weekdays, the alarm should be "7:00" and on the weekend it should be "10:00". 
-  //Unless we are on vacation -- then on weekdays it should be "10:00" and weekends it should be "off".
-  public static boolean specialEleven(int n) {
+  //We want to make a row of bricks that is goal inches long. 
+  //We have a number of small bricks (1 inch each) and big bricks (5 inches each). 
+  //Return true if it is possible to make the goal by choosing from the given bricks. 
+  //This is a little harder than it looks and can be done without any loops. 
+  public static boolean makeBricks(int small, int big, int goal) {
     
   }
 
@@ -17,8 +17,10 @@ public class Main {
     int c = in.nextInt();
 
     boolean d = in.nextBoolean();
+    boolean e = in.nextBoolean();
+    boolean f = in.nextBoolean();
 
-    specialEleven(a);
+    makeBricks(a,b,d);
     in.close();
   }
 }
