@@ -31,7 +31,7 @@ public class L2_printF {
         in.nextInt(); // line skip burner
         grade = in.nextInt();
 
-
+        System.out.printf("Hello %s! You are $d years old. You go to $s and you are in grade $d", name, age, school, grade);
 
         // System.out.println("Hello " + name + "! You are " + age + " years old!");
         // System.out.printf("Hello %f! You are %d years old", name, age);
