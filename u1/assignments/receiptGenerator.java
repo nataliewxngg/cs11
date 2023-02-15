@@ -44,7 +44,7 @@ public class receiptGenerator {
         System.out.printf("%-35s", "Amount of blueberries purchased:");
         numOfBlueberries = in.nextDouble();
 
-        // receipt body 22-s
+        // receipt body (description, quantity, price)
         for (int i = 0; i < 44; i++) {
             if (i == 22) {
                 System.out.print("Receipt");
@@ -52,6 +52,10 @@ public class receiptGenerator {
                 System.out.print("-");
             }
         }
+
+        // description quantity price here
+
+
 
         in.close();
     }
