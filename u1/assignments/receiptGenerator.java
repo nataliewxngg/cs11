@@ -31,6 +31,8 @@ public class receiptGenerator {
         System.out.printf("%36s%n", "Chow Chow Fruit Centre");
         displayHeader(header);
 
+        System.out.println();
+
         // the initial prompt/inputs
         System.out.printf("%-35s", "Number of apples purchased:");
         numOfApples = in.nextInt();
@@ -44,6 +46,8 @@ public class receiptGenerator {
         System.out.printf("%-35s", "Amount of blueberries purchased:");
         numOfBlueberries = in.nextDouble();
 
+        System.out.println();
+
         // receipt body (description, quantity, price)
         for (int i = 0; i < 44; i++) {
             if (i == 22) {
@@ -52,9 +56,11 @@ public class receiptGenerator {
                 System.out.print("-");
             }
         }
+        
+        System.out.println();
 
         // description quantity price here
-
+        // quantity has y on 11 from right
 
 
         in.close();
