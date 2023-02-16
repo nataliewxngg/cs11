@@ -57,11 +57,12 @@ public class receiptGenerator {
             }
         }
         
-        System.out.println();
+        // price description quantity
+        System.out.printf("\n\n%-32s%-13sPrice%n", "Description", "Quantity");
 
-        // description quantity price here
-        // quantity has y on 11 from right
-
+        System.out.printf("%-33s%7d%10.2f%n", "Apples @ $0.83/each", numOfApples, 0.83*numOfApples);
+        System.out.printf("%-33s%7d%10.2f%n", "Oranges @ $0.75/each", numOfOranges, 0.75*numOfOranges);
+        System.out.printf("%-33s%7d%10.2f%n", "Lychees @ $2.49/lbs", numOfLychees, 2.49*numOfLychees);
 
         in.close();
     }
