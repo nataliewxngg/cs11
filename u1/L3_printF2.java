@@ -40,5 +40,22 @@ public class L3_printF2 {
 
         System.out.printf("%+-015.3f%n",p);
 
+
+
+
+        // practice
+        String a = "Hi!";
+        int b = 4;
+        double num = 3.14159;
+
+        System.out.printf("%%%-5s%+3d%%",a,b); // %Hi!^^^+4%
+        System.out.println();
+
+        System.out.printf("\\\"\n\\\"\\\"\\n\""); 
+        // \"
+        // \"\"n"
+
+        System.out.printf("\\\"\t%%%010.3f\t\t%-5.1f", num, num); // \"^^%000003.142^^^^^3.1^^
+
     }
 }
