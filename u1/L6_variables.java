@@ -1,3 +1,5 @@
+package u1;
+
 // variables are memory boxes that are created 
 // in the ram to store data values.
 
