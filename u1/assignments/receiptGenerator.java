@@ -1,5 +1,4 @@
 package u1.assignments;
-
 import java.util.Scanner;
 
 public class receiptGenerator {
