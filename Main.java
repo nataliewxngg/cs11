@@ -1,30 +1,16 @@
 import java.util.*;
 
 public class Main {
-    //We want to make a row of bricks that is goal inches long. We have a number of small bricks (1 inch each) 
-    //and big bricks (5 inches each). Return true if it is possible to make the goal by choosing from the given bricks.
-    public boolean makeBricks(int small, int big, int goal) {
-        // 1 inch - small
-        // 5 inch - big
-        // goal must equal to sum if possible
-        int sum = 0;
-
-        for (int i = 0; i<=big; i++) {
-            sum = 5*i;
-            if (sum == goal) {
-                return true;
-            }
-            else {
-                for (int count = 0; count<=small; count++) {
-                    sum = sum + count;
-                    if (sum == goal) {
-                        return true;
-                    }
-                }
-            }
+    // We want make a package of goal kilos of chocolate. 
+    // We have small bars (1 kilo each) and big bars (5 kilos each). 
+    // Return the number of small bars to use, assuming we always use big bars before small bars. 
+    // Return -1 if it can't be done.
+    public static int makeChocolate(int small, int big, int goal) {
+        for (int i = 0; i < big; i++) {
+            
         }
-        return false;
     }
+
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -33,7 +19,6 @@ public class Main {
         int c = in.nextInt();
 
         boolean d = in.nextBoolean();
-
         in.close();
     }
 }
