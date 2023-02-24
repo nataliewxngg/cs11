@@ -6,9 +6,7 @@ public class Main {
     // Return the number of small bars to use, assuming we always use big bars before small bars. 
     // Return -1 if it can't be done.
     public static int makeChocolate(int small, int big, int goal) {
-        for (int i = 0; i < big; i++) {
-            
-        }
+        
     }
 
 

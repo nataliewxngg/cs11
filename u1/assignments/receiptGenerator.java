@@ -59,11 +59,13 @@ public class receiptGenerator {
             }
         }
         
-        System.out.printf("\n\n%-32s%-13sPrice%n", "Description", "Quantity");
-        System.out.printf("%-33s%7d%10.2f%n", "Apples @ $0.03/each", numOfApples, 0.83 * numOfApples);
-        System.out.printf("%-33s%7d%10.2f%n", "Oranges @ $0.75/each", numOfOranges, 0.75 * numOfOranges);
-        System.out.printf("%-33s%7.2f%10.2f%n", "Lychees @ $2.49/lbs", amountOfLychees, 2.49 * amountOfLychees);
-        System.out.printf("%-33s%7.2f%10.2f%n", "Blueberries @ $1.42/lbs", amountOfBlueberries, 1.42 * amountOfBlueberries);
+        System.out.println("\n\n");
+
+        System.out.printf("%-30s%10s%10s%n", "Description", "Quantity", "Price"); // need to make indent by less spaces for first
+        System.out.printf("%-30s%10d%10.2f%n", "Apples @ $0.03/each", numOfApples, 0.83 * numOfApples);
+        System.out.printf("%-30s%10d%10.2f%n", "Oranges @ $0.75/each", numOfOranges, 0.75 * numOfOranges);
+        System.out.printf("%-30s%10.2f%10.2f%n", "Lychees @ $2.49/lbs", amountOfLychees, 2.49 * amountOfLychees);
+        System.out.printf("%-30s%10.2f%10.2f%n", "Blueberries @ $1.42/lbs", amountOfBlueberries, 1.42 * amountOfBlueberries);
 
         // SUBTOTAL and NET TOTAL
         subtotal = (0.83 * numOfApples) + (0.75 * numOfOranges) + (2.49 * amountOfLychees)
