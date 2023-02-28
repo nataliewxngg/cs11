@@ -7,7 +7,7 @@ public class L3_printF2 {
         String s = "Markville";
         int n = 23456789;
         double p = 3.1415;
-        double chow = 12345.6789;
+        // double chow = 12345.6789;
 
         // main code
         // %f <- float holder (by default, any number you replace in the float holder will be rounded to 6 decimals)
@@ -56,6 +56,6 @@ public class L3_printF2 {
         // \"\"n"
 
         System.out.printf("\\\"\t%%%010.3f\t\t%-5.1f", num, num); // \"^^%000003.142^^^^^3.1^^
-
+        
     }
 }

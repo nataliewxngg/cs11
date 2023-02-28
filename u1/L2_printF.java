@@ -35,6 +35,6 @@ public class L2_printF {
 
         // System.out.println("Hello " + name + "! You are " + age + " years old!");
         // System.out.printf("Hello %f! You are %d years old", name, age);
-
+        in.close();
     }
 }

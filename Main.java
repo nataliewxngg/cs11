@@ -1,4 +1,4 @@
-import java.util.*;
+// import java.util.*;
 
 public class Main {
     // We want make a package of goal kilos of chocolate. 
@@ -6,8 +6,6 @@ public class Main {
     // Return the number of small bars to use, assuming we always use big bars before small bars. 
     // Return -1 if it can't be done.
     // public static int makeChocolate(int small, int big, int goal) {
-        
-    // }
 
 
     public static void main(String[] args) {
@@ -20,7 +18,6 @@ public class Main {
         // in.close();
         int num = -98765;
         System.out.printf("%+10d",num);
-
 
     }
 }
