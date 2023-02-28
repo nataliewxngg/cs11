@@ -38,7 +38,7 @@ public class L3_printF2 {
         System.out.printf("%f%n",p);
         System.out.printf("%15.3f%n",p); // rounds up if needed
 
-        System.out.printf("%+-015.3f%n",p);
+        System.out.printf("%+015.3f%n",p);
 
 
 
