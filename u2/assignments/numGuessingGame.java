@@ -22,24 +22,24 @@ public class numGuessingGame {
 
             if (guessNum != secretNum) {
 
-                if (chances == 1){
+                if (chances == 1) {
                     System.out.println("Too bad! Try harder next time!");
                 }
 
                 else if (guessNum > 999 || guessNum < 1) {
                     System.out.println("Invalid Input! Ensure your number is between 1 and 999!");
                     chances++;
-                    guessNum = in.nextInt(); 
+                    guessNum = in.nextInt();
                 }
 
                 else if (guessNum > secretNum) {
-                    System.out.printf("Choose a smaller number! You have %d guesses left. ", chances-1);
-                    guessNum = in.nextInt(); 
+                    System.out.printf("Choose a smaller number! You have %d guesses left. ", chances - 1);
+                    guessNum = in.nextInt();
                 }
 
                 else if (guessNum < secretNum) {
-                    System.out.printf("Choose a larger number! You have %d guesses left. ", chances-1);
-                    guessNum = in.nextInt(); 
+                    System.out.printf("Choose a larger number! You have %d guesses left. ", chances - 1);
+                    guessNum = in.nextInt();
                 }
             }
 
@@ -49,5 +49,7 @@ public class numGuessingGame {
             }
 
         }
+        
+        in.close();
     }
 }
