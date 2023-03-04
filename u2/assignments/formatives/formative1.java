@@ -1,4 +1,4 @@
-package u2.assignments;
+package u2.assignments.formatives;
 import java.util.Scanner;
 
 public class formative1 {
@@ -43,7 +43,10 @@ public class formative1 {
         else if (b<c && b<a) d = b;
         else d = c;
 
-        System.out.printf("The smallest integer is %d",d)
+        System.out.printf("The smallest integer is %d", d);
+
+        // Killing/Terminating Variables
+        in.close();
         
     }
 }
