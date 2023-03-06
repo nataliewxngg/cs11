@@ -46,10 +46,38 @@ public class formative3 {
         
         // Variables
         int secretNum = 9;
+        int guess;
         Scanner in = new Scanner(System.in);
 
         // Main Code
+        System.out.println("********** NUMBER MINE GAME *********");
+        System.out.println("You have 5 guesses to dodge my mine!!");
+        System.out.println("Good Luck...  and Stay Alive...!  >:)");
+
+        System.out.printf("%nGuess #%d: ", 1);
+        guess = in.nextInt();
+
+        for (int i = 2; i < 6; i++) {
+
+            if (guess == secretNum) {
+                System.out.println("OH NO! OH NO! OH NO NO NO NO NO!");
+                i = 5;
+            }
+
+            else {
+
+                System.out.printf("Guess #%d: ", i);
+                guess = in.nextInt();
+
+            }
+
+        }
         
+        if (guess != secretNum) {
+            System.out.println("\nYOU GET TO LIVE FOR ANOTHER DAY");
+        }
+
+        in.close();
 
     }
 }

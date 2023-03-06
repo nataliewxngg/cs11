@@ -9,15 +9,8 @@ public class Main {
 
 
     public static void main(String[] args) {
-        // Scanner in = new Scanner(System.in);
-        // int a = in.nextInt();
-        // int b = in.nextInt();
-        // int c = in.nextInt();
-
-        // boolean d = in.nextBoolean();
-        // in.close();
-        int num = -98765;
-        System.out.printf("%+10d",num);
+        System.out.printf("%3d", 8);
+        System.out.printf("%d",3);
 
     }
 }
