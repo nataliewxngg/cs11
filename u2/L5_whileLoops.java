@@ -95,5 +95,7 @@ public class L5_whileLoops {
             termNo++;
         }
 
+        in.close();
+
     }
 }

@@ -61,7 +61,6 @@ public class formative4 {
         }
 
         // Ask the user for positive integers and sum up all inputs until a value of -1 is read in.
-        Scanner in = new Scanner(System.in);
 
     }
 }

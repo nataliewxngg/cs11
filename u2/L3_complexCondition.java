@@ -155,5 +155,7 @@ public class L3_complexCondition {
         // Y
         // Z
 
+        s.close();
+
     }
 }

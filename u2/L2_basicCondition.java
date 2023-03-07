@@ -89,5 +89,7 @@ public class L2_basicCondition {
         // 1.67
         // ^^^CSbe carefulafter printf
         
+        s.close();
+        
     }   
 }
