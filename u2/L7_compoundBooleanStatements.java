@@ -53,6 +53,10 @@ public class L7_compoundBooleanStatements {
         // If the number is NOT negative, BUT the number is even
         // Display "Option B"
         // Otherwise, display "Option C"
+
+        // Note 1: NOT A NOR B -> NOT A AND NOT B
+        // Note 2: NOT A BUT B -> NOT A AND B 
+
         Scanner in = new Scanner(System.in);
         System.out.print("Enter an integer: ");
         int num = in.nextInt();
