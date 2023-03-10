@@ -9,12 +9,12 @@ import java.util.Scanner;
 public class numGuessingGame {
     public static void main(String[] args) {
         
-        // vars
+        // Variables
         int secretNum = 59;
         int guessNum;
         Scanner in = new Scanner(System.in);
 
-        // main
+        // Main Code
         System.out.print("Enter your guess! ");
         guessNum = in.nextInt();
 
@@ -22,14 +22,14 @@ public class numGuessingGame {
 
             if (guessNum != secretNum) {
 
-                if (chances == 1) {
-                    System.out.println("Too bad! Try harder next time!");
-                }
-
-                else if (guessNum > 999 || guessNum < 1) {
-                    System.out.println("Invalid Input! Ensure your number is between 1 and 999!");
+                if (guessNum > 999 || guessNum < 1) {
+                    System.out.print("Invalid Input! Ensure your number is between 1 and 999! ");
                     chances++;
                     guessNum = in.nextInt();
+                }
+
+                else if (chances == 1) {
+                    System.out.println("Too bad! Try harder next time!");
                 }
 
                 else if (guessNum > secretNum) {
@@ -47,7 +47,6 @@ public class numGuessingGame {
                 chances = 0;
                 System.out.println("Congratulations! That is the secret number!");
             }
-
         }
         
         in.close();
