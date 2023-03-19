@@ -34,8 +34,8 @@ public class L1_booleanOperators {
         // -----------------------------------------------
 
         // < Lesser Than Operator
-        System.out.println(4.5 < 9/2); // false (they are both equal)
-        System.out.println(9/2 < 4.5); // false (they are both equal)
+        System.out.println(4.5 < 9/2); // false (4.5 < 4.0)
+        System.out.println(9/2 < 4.5); // true (4.0 < 4.5)
 
         System.out.println(5 < 5); // false
         
@@ -61,7 +61,7 @@ public class L1_booleanOperators {
         System.out.println();
 
         // NOTE:
-        // to compare chara cters:
+        // to compare characters:
         // SPACE < Numeric Strings < 'A'-'Z' < 'a'-'z'
 
     }
