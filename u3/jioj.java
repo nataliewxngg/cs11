@@ -9,6 +9,4 @@ public class jioj {
     public static void main(String[] args) {
         System.out.println(roundResultDoubleToInt(4.7)); // returns 4
     }
-
-    
 }
