@@ -1,15 +1,23 @@
 // import java.util.*;
 
 public class Main {
-    // We want make a package of goal kilos of chocolate. 
-    // We have small bars (1 kilo each) and big bars (5 kilos each). 
-    // Return the number of small bars to use, assuming we always use big bars before small bars. 
-    // Return -1 if it can't be done.
-    // public static int makeChocolate(int small, int big, int goal) {
-
+    public static boolean sameStarChar(String str) {
+  
+        while (str.indexOf("*") != -1) {
+          
+          // NOT first/last letter
+          if (str.indexOf("*") != 0 && str.indexOf("*") != str.length()-1) { 
+            if (str.charAt(str.indexOf("*")-1) != str.charAt(str.indexOf("*")+1)) {
+              return false;
+            }
+          }
+          str = str.substring(0, str.indexOf("*")) + "o" + str.substring(str.indexOf("*")+1);
+        }
+        return true;
+      }
+      
 
     public static void main(String[] args) {
-        System.out.printf("%3d", 8);
-        System.out.printf("%d",3);
+        System.out.println(sameStarChar("***"));
     }
 }
