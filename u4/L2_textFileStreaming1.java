@@ -8,7 +8,7 @@ public class L2_textFileStreaming1 {
     // Exceptions such as Arithmetic Exceptions
     // and String exceptions are known as default exceptions
 
-    // When streaming text files, there is a posibility 
+    // When streaming text files, there is a possibility 
     // that the file does not exist. However, text file streaming
     // is NOT a default exception, and hence you need to introduce
     // that exception into your program
