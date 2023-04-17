@@ -73,7 +73,6 @@ public class L5_textFileStreaming4 {
         while (inputFile.hasNextLine()) {
             s = inputFile.nextLine();
             double finalMark = (termMarks(s) * 0.7) + (culmMarks(s) * 0.3);
-
     
             outputFile.printf("%s, %s, %.1f, %.1f, %.1f%n", lastName(s), firstName(s), termMarks(s), culmMarks(s), finalMark);
         }

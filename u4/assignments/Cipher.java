@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.io.*;
 
 public class Cipher {
-    public static String characterSubstitutions(String s) {
+    public static String characterSubstitutions(String s) { // for step 2
         int num;
         String sub = "@___=___!?____*#_&$+_^_%";
         String newStr = "";
@@ -32,13 +32,43 @@ public class Cipher {
 
     }
 
-    public static String swapFirstAndLast2Chars(String s) {
+    public static String swapFirstAndLast2Chars(String s) { // for step 4
         String firstTwo = s.substring(0, 2);
         String mid = s.substring(2, s.length() - 2);
         String lastTwo = s.substring(s.length() - 2);
 
         return lastTwo + mid + firstTwo;
 
+    }
+
+    public static String swapMiddle2(String s) { // for step 5
+        if (s.length()%2==0) { // even length
+            String middleLeft = s.substring(s.length()/2-2, s.length()/2);
+            String middleRight = s.substring(s.length()/2, s.length()/2+2);
+    
+            return s.substring(0,s.length()/2-2) + middleRight + middleLeft + s.substring(s.length()/2+2);
+        }
+        else {
+            String middleLeft = s.substring(s.length()/2-1, s.length()/2+1);
+            String middleRight = s.substring(s.length()/2+1, s.length()/2+3);
+        
+            return s.substring(0,s.length()/2-1) + middleRight + middleLeft + s.substring(s.length()/2+3);
+        }
+    }
+
+    public static String swapEvery2(String s) { // for step 6
+        String newStr = "";
+
+        for (int i = 0; i < s.length(); i+=2) {
+          if (i == s.length()-1) {
+            newStr += s.charAt(i);
+          }
+          else {
+            newStr += s.charAt(i+1);
+            newStr += s.charAt(i);
+          }
+        }
+        return newStr;
     }
 
     public static void Main(String[] args) throws IOException {
@@ -88,14 +118,16 @@ public class Cipher {
                 // step 5 - swap mid two chars
                 s = swapMiddle2(s);
 
+                // step 6 - swap every 2 letters
+                s = swapEvery2(s);
+                
             }
         }
         
         // Decryption Process
         else { 
-
+            System.out.println("Decryption not yet completed.");
         }
-
 
         // Termination of Variables
         in.close();
