@@ -4,7 +4,41 @@ import java.io.*;
 
 public class Cipher {
     public static String characterSubstitutions(String s) {
-        
+        int num;
+        String sub = "@___=___!?____*#_&$+_^_%";
+        String newStr = "";
+
+        for (int i = 0; i < s.length(); i++) {
+
+            if (s.charAt(i) == 'A' || s.charAt(i) == 'E' || s.charAt(i) == 'I' || s.charAt(i) == 'J'
+                    || s.charAt(i) == 'O' || s.charAt(i) == 'P' || s.charAt(i) == 'R' || s.charAt(i) == 'S'
+                    || s.charAt(i) == 'T' || s.charAt(i) == 'V' || s.charAt(i) == 'X' || s.charAt(i) == ' ') {
+
+                num = s.charAt(i) - 65;
+                newStr += sub.charAt(num);
+
+            }
+
+            else if (s.charAt(i) == ' ') {
+                newStr += "_";
+            }
+
+            else {
+                newStr += s.charAt(i);
+            }
+
+        }
+        return newStr;
+
+    }
+
+    public static String swapFirstAndLast2Chars(String s) {
+        String firstTwo = s.substring(0, 2);
+        String mid = s.substring(2, s.length() - 2);
+        String lastTwo = s.substring(s.length() - 2);
+
+        return lastTwo + mid + firstTwo;
+
     }
 
     public static void Main(String[] args) throws IOException {
@@ -35,12 +69,25 @@ public class Cipher {
         // Encryption Process
         if (encryptOrDecrypt == 0) { 
             while (inputFile.hasNextLine()) {
-
-                s = (inputFile.nextLine()).toUpperCase(); // step 1 - to uppercase
+                
+                // step 1 - to uppercase
+                s = (inputFile.nextLine()).toUpperCase(); 
 
                 // step 2 - character substitutions
+                s = characterSubstitutions(s);
                 
+                // step 3 - first half -> last half
+                if ((s.length() % 2) == 0)
+                    s = s.substring(s.length() / 2) + s.substring(0, s.length() / 2); // even length of letters
+                else
+                    s = s.substring(s.length() / 2 + 1) + s.substring(0, s.length() / 2 + 1); // odd length of letters
                 
+                // step 4 - swap 1st 2 chars with last 2
+                s = swapFirstAndLast2Chars(s);
+                
+                // step 5 - swap mid two chars
+                s = swapMiddle2(s);
+
             }
         }
         
@@ -52,7 +99,8 @@ public class Cipher {
 
         // Termination of Variables
         in.close();
-        
+        inputFile.close();
+        outputFile.close();        
 
     }
 }
