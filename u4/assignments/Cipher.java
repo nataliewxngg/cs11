@@ -5,101 +5,52 @@ import java.io.*;
 
 public class Cipher {
 
-    // Encryption Methods
-    public static String charSubEncrypt(String s) { // for step 2
-        int num;
-        String sub = "@___=___!?____*#_&$+_^_%";
-        String newStr = "";
+    public static String Encrypt(String s) {
 
-        for (int i = 0; i < s.length(); i++) {
+        // step 1 - to uppercase
+        s = s.toUpperCase();
 
-            if (s.charAt(i) == 'A' || s.charAt(i) == 'E' || s.charAt(i) == 'I' || s.charAt(i) == 'J'
-                    || s.charAt(i) == 'O' || s.charAt(i) == 'P' || s.charAt(i) == 'R' || s.charAt(i) == 'S'
-                    || s.charAt(i) == 'T' || s.charAt(i) == 'V' || s.charAt(i) == 'X') {
+        // step 2 - character substitutions
+        s = Encrypt.step2(s);
 
-                num = s.charAt(i) - 65;
-                newStr += sub.charAt(num);
+        // step 3 - first half -> last half
+        s = Encrypt.step3(s);
 
-            }
+        // step 4 - swap 1st 2 chars with last 2
+        s = Encrypt.step4(s);
 
-            else if (s.charAt(i) == ' ') {
-                newStr += "_";
-            }
+        // step 5 - swap mid two chars
+        s = Encrypt.step5(s);
 
-            else {
-                newStr += s.charAt(i);
-            }
+        // step 6 - swap every 2 letters
+        s = Encrypt.step6(s);
 
-        }
-        return newStr;
-
+        return s;
     }
 
-    public static String swapFirstAndLast2Chars(String s) { // for step 4
-        String firstTwo = s.substring(0, 2);
-        String mid = s.substring(2, s.length() - 2);
-        String lastTwo = s.substring(s.length() - 2);
+    public static String Decrypt(String s) {
 
-        return lastTwo + mid + firstTwo;
+        // Step 1 - Swap every two letters
+        s = Decrypt.step1(s);
 
+        // Step 2 - Swap the two characters of the leftest and rightest from the middle of the string
+        s = Decrypt.step2(s);
+
+        // Step 3 - Swap the first two characters with the last two
+        s = Decrypt.step3(s);
+
+        // Step 4 - Move the first half of the string to be last half
+        s = Decrypt.step4(s);
+
+        // Step 5 - Character Substitutions
+        s = Decrypt.step5(s);
+
+        // Step 6 - Change all letters to lowercase
+        s = s.toLowerCase();
+
+        return s;
     }
-
-    public static String swapMiddle2(String s) { // for step 5
-        if (s.length()%2==0) { // even length
-            String middleLeft = s.substring(s.length()/2-2, s.length()/2);
-            String middleRight = s.substring(s.length()/2, s.length()/2+2);
-
-            return s.substring(0,s.length()/2-2) + middleRight + middleLeft + s.substring(s.length()/2+2);
-        }
-        else {
-            String middleLeft = s.substring(s.length()/2-1, s.length()/2+1);
-            String middleRight = s.substring(s.length()/2+1, s.length()/2+3);
-
-            return s.substring(0,s.length()/2-1) + middleRight + middleLeft + s.substring(s.length()/2+3);
-        }
-    }
-
-    public static String swapEvery2(String s) { // for step 6
-        String newStr = "";
-
-        for (int i = 0; i < s.length(); i += 2) {
-            if (i == s.length() - 1) {
-                newStr += s.charAt(i);
-            } else {
-                newStr += s.charAt(i + 1);
-                newStr += s.charAt(i);
-            }
-        }
-        return newStr;
-    }
-
-    // Decryption Methods
-    public static String charSubDecrypt(String s) { // for step 5 
-        int num;
-        String sub = "aj_e_________________to___rxspvi";
-        String newStr = "";
-
-        for (int i = 0; i < s.length(); i++) {
-
-            if (s.charAt(i) == '@' || s.charAt(i) == '=' || s.charAt(i) == '!' || s.charAt(i) == '?'
-                    || s.charAt(i) == '*' || s.charAt(i) == '#' || s.charAt(i) == '&' || s.charAt(i) == '$'
-                    || s.charAt(i) == '+' || s.charAt(i) == '^' || s.charAt(i) == '%') {
-                num = Math.abs(64 - s.charAt(i));
-                newStr += sub.charAt(num);
-            }
-
-            else if (s.charAt(i) == '_') {
-                newStr += " ";
-            }
-
-            else {
-                newStr += s.charAt(i);
-            }
-
-        }
-        return newStr;
-    }
-
+    
     public static void main(String[] args) throws IOException {
 
         // Global Variables (some initiated by user input)
@@ -129,60 +80,20 @@ public class Cipher {
         // Encryption Process
         if (encryptOrDecrypt == 0) {
             while (inputFile.hasNextLine()) {
+                
                 s = inputFile.nextLine();
+                outputFile.println(Encrypt(s)); // Stream to new file
 
-                // step 1 - to uppercase
-                s.toUpperCase();
-
-                // step 2 - character substitutions
-                s = charSubEncrypt(s);
-
-                // step 3 - first half -> last half
-                if ((s.length() % 2) == 0)
-                    s = s.substring(s.length() / 2) + s.substring(0, s.length() / 2); // even length of letters
-                else
-                    s = s.substring(s.length() / 2 + 1) + s.substring(0, s.length() / 2 + 1); // odd length of letters
-
-                // step 4 - swap 1st 2 chars with last 2
-                s = swapFirstAndLast2Chars(s);
-
-                // step 5 - swap mid two chars
-                s = swapMiddle2(s);
-
-                // step 6 - swap every 2 letters
-                s = swapEvery2(s);
-
-                outputFile.println(s); // Stream to new file
             }
         }
 
         // Decryption Process
         else {
             while (inputFile.hasNextLine()) {
+
                 s = inputFile.nextLine();
-
-                // step 1 - swap every 2 letters
-                s = swapEvery2(s);
-
-                // step 2 - swap mid 2 chars
-                s = swapMiddle2(s);
-
-                // step 3 - swap 1st 2 chars with last 2
-                s = swapFirstAndLast2Chars(s);
-
-                // step 4 - first half -> last half
-                if ((s.length() % 2) == 0)
-                    s = s.substring(s.length() / 2) + s.substring(0, s.length() / 2); // even length of letters
-                else
-                    s = s.substring(s.length() / 2 + 1) + s.substring(0, s.length() / 2 + 1); // odd length of letters
-
-                // step 5 - character substitution
-                s = charSubDecrypt(s);
-
-                // step 6 - to lowercase
-                s = s.toLowerCase();
-
-                outputFile.println(s);
+                outputFile.println(Decrypt(s));
+                
             }
         }
 

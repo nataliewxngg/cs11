@@ -2,31 +2,16 @@
 import java.io.*;
 
 public class Main {
-  public static String charSubDecrypt(String s) {
-    int num;
-    String sub = "aj_e_________________to___rxspvi";
-    String newStr = "";
+  public static String step4(String s) {
+    if ((s.length() % 2) == 0)
+        s = s.substring(s.length() / 2) + s.substring(0, s.length() / 2); // even length of letters
+    else
+        s = s.substring(s.length() / 2) + s.substring(0, s.length() / 2); // odd length of letters
 
-    for (int i = 0; i < s.length(); i++) {
-
-      if (s.charAt(i) == '@' || s.charAt(i) == '=' || s.charAt(i) == '!' || s.charAt(i) == '?'
-          || s.charAt(i) == '*' || s.charAt(i) == '#' || s.charAt(i) == '&' || s.charAt(i) == '$'
-          || s.charAt(i) == '+' || s.charAt(i) == '^' || s.charAt(i) == '%') {
-            num =
-      } 
-      else if (s.charAt(i) == '_') {
-        newStr += " ";
-      }
-
-      else {
-        newStr += s.charAt(i);
-      }
-
-    }
-    return newStr;
+    return s;
 }
 
   public static void main(String[] args) throws IOException {
-    System.out.println(charSubDecrypt("PINEAPPLE"));
+    System.out.println(step4("PPLEPINEA"));
   }
 }
