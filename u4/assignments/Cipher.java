@@ -3,6 +3,9 @@ package u4.assignments;
 import java.util.Scanner;
 import java.io.*;
 
+// import u4.assignments.Decrypt;
+// import u4.assignments.Encrypt;
+
 public class Cipher {
 
     public static String Encrypt(String s) {
