@@ -78,5 +78,8 @@ public class L1_StringMethods {
         // Let's try out our method that we wrote above
         System.out.println(removeAE("Hello"));
 
+        // Integer.parseInt("");
+        // Double.parseDouble("");
+
     }
 }

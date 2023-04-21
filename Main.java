@@ -2,16 +2,30 @@
 import java.io.*;
 
 public class Main {
-  public static String step4(String s) {
-    if ((s.length() % 2) == 0)
-        s = s.substring(s.length() / 2) + s.substring(0, s.length() / 2); // even length of letters
-    else
-        s = s.substring(s.length() / 2) + s.substring(0, s.length() / 2); // odd length of letters
+  public static boolean isPalindrome(String s) {
+    String newStr = "";
+    for (int i = s.length()-1; i >= 0; i--) {
+      newStr += s.charAt(i);
+    }
+    return newStr.equals(s);
+  }
 
+  public static String longestPalindrome(String s) {
+    // Regular Case
+    for (int searchLength = s.length(); searchLength >= 1; searchLength--) {
+      for (int index = 0; index <= Math.abs(searchLength - s.length()); index++) {
+        if (isPalindrome(s.substring(index, searchLength+index))) {
+          return s.substring(index, index + searchLength);
+        }
+      }
+    }
     return s;
-}
-
+  }
+  
   public static void main(String[] args) throws IOException {
-    System.out.println(step4("PPLEPINEA"));
+    // System.out.println(afterCH("YRDSB",'Z'));
+
+    System.out.println(longestPalindrome("abaCDDC"));
+
   }
 }
