@@ -107,5 +107,7 @@ public class Cipher {
         inputFile.close();
         outputFile.close();
 
+        System.out.println("Done");
+
     }
 }

@@ -30,7 +30,7 @@ public class L1_StringMethods {
         // This method returns the character at position #
         System.out.println(s.charAt(5)); 
         // System.out.println(s.charAt(-1)); // cannot obtain an index below 0
-        // System.out.println(s.charAt(14)); // cannot obtain an index that is nonexistent
+        // System.out.println(s.charAt(14)); // cannot obtain an index that is nonexistent (gives out of bounds exception)
 
         // 3) .indexOf(str)
         // This method returns the left first occurrence of str if it can be found
@@ -77,9 +77,6 @@ public class L1_StringMethods {
 
         // Let's try out our method that we wrote above
         System.out.println(removeAE("Hello"));
-
-        // Integer.parseInt("");
-        // Double.parseDouble("");
 
     }
 }
