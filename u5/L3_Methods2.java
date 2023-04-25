@@ -42,6 +42,23 @@ public class L3_Methods2 {
         return output;
     }
 
+    // Write a method called genCharArr which takes a String s
+    // and an integer n
+    // The method creates a char array which constist of the first
+    // n characters of s
+    // genCharArr("Hello Mr. Chow", 5); -> {"H","e","l","l","o"}
+    // genCharArr("apple", 8) -> {"a","p","p","l","e"}
+    public static char[] genCharArr(String s, int n) {
+        // Variables
+        char[] output = new char[Math.min(n, s.length())];
+
+        // genCharArr Body
+        for (int i = 0; i < output.length; i++) {
+            output[i] = s.charAt(i);
+        }
+        return output;
+    }
+
     public static void main(String[] args) {
         int[] intArr1 = genArr(4);
         int[] intArr2 = genArr(6);
