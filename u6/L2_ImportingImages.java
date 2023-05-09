@@ -1,6 +1,7 @@
 package u6;
 import java.awt.*;
 import javax.swing.*;
+
 import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.imageio.ImageIO;
