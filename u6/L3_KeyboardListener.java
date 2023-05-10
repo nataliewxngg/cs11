@@ -52,7 +52,7 @@ public class L3_KeyboardListener extends JPanel implements KeyListener{
         }
         else if (e.getKeyChar() == 's') {
             yPos+=20;
-            repaint();
+            repaint(); 
         }
         else if (e.getKeyChar() == 'd') {
             xPos+=20;
