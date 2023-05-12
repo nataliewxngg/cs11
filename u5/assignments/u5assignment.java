@@ -15,8 +15,8 @@ public class u5assignment {
         return output;
     }
 
-    public static int[] addVal(double[] x, double y) {
-        int[] output = new int[x.length + 1];
+    public static double[] addVal(double[] x, double y) {
+        double[] output = new double[x.length + 1];
         for (int i = 0; i < x.length; i++) {
             output[i] = x[i];
         }
