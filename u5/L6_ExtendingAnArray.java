@@ -1,5 +1,7 @@
 package u5;
 
+import javax.swing.event.SwingPropertyChangeSupport;
+
 public class L6_ExtendingAnArray {
 
     // Write a method called extendArray which takes an integer array ia
