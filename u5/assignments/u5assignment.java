@@ -30,6 +30,13 @@ public class u5assignment {
         // Main Variables
         Scanner in = new Scanner(System.in);
         int year;
+        int employee;
+        double sale;
+        boolean employeeExists = false;
+        int[] employees = {};
+        double[] sales = {};
+        double totalSales = 0;
+        double totalBonus = 0;
 
         // Main Body
         System.out.print("Year: ");
@@ -45,22 +52,51 @@ public class u5assignment {
         inputFile.nextLine(); // skip first two lines
 
         while (inputFile.hasNextLine()) {
+            
+            employee = inputFile.nextInt();
+            sale = inputFile.nextDouble();
 
-            // employee id
-            // outputFile.printf("%-15d", employee);
+            for (int i = 0; i < employees.length; i++) {
+                if (employees[i] == employee) {
+                    sales[i] += sale;
+                    employeeExists = true;
+                    break;
+                }
+            }
 
-            // sales
-            // outputFile.printf("%11.2f",sales);
-            // salesAcc += sales;
+            if (!employeeExists) {
+                employees = addVal(employees, employee);
+                sales = addVal(sales, sale);
+            }
+            employeeExists = false;
 
-            // bonus
-            // outputFile.printf("%14.2f%n",sale*0.05);
-            // bonusAcc += sale*0.05;
+            // System.out.println(1);
         }
+        
+        for (int i = 0; i < employees.length; i++) {
+            outputFile.printf("%-15d", employees[i]);
+
+            outputFile.printf("%11.2f", sales[i]);
+            totalSales += sales[i];
+
+            outputFile.printf("%14.2f%n", sales[i] * 0.05);
+            totalBonus += sales[i] * 0.05;
+        }
+
+        // outputFile.printf("%-15d", employee);
+        // outputFile.printf("%11.2f",sales);
+        // outputFile.printf("%14.2f%n",sale*0.05);
+
+        outputFile.println("****************************************");
+        outputFile.printf("Number of Employees: %d%n", employees.length);
+        outputFile.printf("Sales Total: %.2f%n", totalSales);
+        outputFile.printf("Bonus Total: %.2f%n", totalBonus);
 
         in.close();
         inputFile.close();
         outputFile.close();
+
+        System.out.println("DONE");
 
     }
 }
