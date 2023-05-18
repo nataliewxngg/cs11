@@ -3,9 +3,16 @@ package u5.assignments;
 import java.util.Scanner;
 import java.io.*;
 
+// Natalie Wong
+// May 17th, 2023
+
+// This program is purposed towards documenting the individual sales 
+// transactions and bonuses for each employee of ChowTech Inc. into 
+// a single txt file.
+
 public class u5assignment {
 
-    public static int[] addVal(int[] x, int y) {
+    public static int[] addVal(int[] x, int y) { // for increasing employees array
         int[] output = new int[x.length + 1];
         for (int i = 0; i < x.length; i++) {
             output[i] = x[i];
@@ -15,7 +22,7 @@ public class u5assignment {
         return output;
     }
 
-    public static double[] addVal(double[] x, double y) {
+    public static double[] addVal(double[] x, double y) { // for increasing sales array
         double[] output = new double[x.length + 1];
         for (int i = 0; i < x.length; i++) {
             output[i] = x[i];
@@ -57,14 +64,17 @@ public class u5assignment {
             sale = inputFile.nextDouble();
 
             for (int i = 0; i < employees.length; i++) {
-                if (employees[i] == employee) {
+                if (employees[i] == employee) { // if employee is already registered into the employees array
+                                                // increase their sales amount (same index)
                     sales[i] += sale;
                     employeeExists = true;
                     break;
                 }
             }
 
-            if (!employeeExists) {
+            if (!employeeExists) { // if employee wasn't registered into the employees array yet,
+                                   // add their employee id into the employees array and at the same
+                                   // index, document their initial sales amount
                 employees = addVal(employees, employee);
                 sales = addVal(sales, sale);
             }
