@@ -1,7 +1,7 @@
 package u6;
 
 import java.awt.*;
-import java.awt.event.*;
+// import java.awt.event.*;
 import javax.swing.*;
 
 import java.awt.image.BufferedImage;
@@ -54,7 +54,7 @@ public class L7_SpriteAnimation extends JPanel implements Runnable{
             System.out.println("Something wrong with the image!");
         }
 
-        JFrame frame = new JFrame("Lesson 7 - Sprite Animation");
+        JFrame frame = new JFrame("L7 - Sprite Animation");
         L7_SpriteAnimation panel = new L7_SpriteAnimation();
         frame.add(panel);
         frame.setVisible(true);
