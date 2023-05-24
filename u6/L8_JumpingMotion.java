@@ -22,7 +22,7 @@ public class L8_JumpingMotion extends JPanel implements KeyListener, MouseListen
 
     // Game Stats for T-Rex
     public static int posX = 100;
-    public static int posY = 350;
+    public static int posY = 335;
     public static boolean isJumping = false;
     public static int spriteNo = 0;
     public static int gravity = 5;
@@ -57,8 +57,6 @@ public class L8_JumpingMotion extends JPanel implements KeyListener, MouseListen
                 frameController = 0;
             }
         }
-
-
     }
 
     public void mousePressed(MouseEvent e) {
