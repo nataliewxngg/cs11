@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 public class forFun extends JPanel implements KeyListener, MouseListener, Runnable {
 
     // Global Variables
-
+    public static int none = 0;
 
     public forFun() {
         setPreferredSize(new Dimension(700,400));
@@ -30,6 +30,14 @@ public class forFun extends JPanel implements KeyListener, MouseListener, Runnab
     }
 
     public static void main(String[] args) {
+
+        try {
+            
+        }
+        catch (Exception e) {
+            System.out.println("Something wrong with the image!");
+        }
+
         JFrame frame = new JFrame("Just For Fun");
         forFun panel = new forFun();
         frame.add(panel);
