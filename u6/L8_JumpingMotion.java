@@ -44,17 +44,31 @@ public class L8_JumpingMotion extends JPanel implements KeyListener, MouseListen
     // paintCOmponent is being called EVERY 0.02 seconds (50 FPS)
     // due to our DYNAMIC approach
     public void paintComponent(Graphics g) {
+        // Draw T-Rex Running
         super.paintComponent(g); // Clear the screen
 
         g.drawImage(stateImages[gameState],0,0,null);
 
-        if (gameState == 1) {
-            // Draw T-Rex
-            g.drawImage(trex[spriteNo],posX,posY,null);
-            frameController += 1;
-            if (frameController == 5) {
-                spriteNo = (spriteNo + 1) % 2;
-                frameController = 0;
+        if (!isJumping) {
+            if (gameState == 1) {
+                // Draw T-Rex
+                g.drawImage(trex[spriteNo],posX,posY,null);
+                frameController += 1;
+                if (frameController == 5) {
+                    spriteNo = (spriteNo + 1) % 2;
+                    frameController = 0;
+                }
+            }
+        }
+        else if (isJumping) {
+            g.drawImage(trex[2],posX,posY,null);
+            posY+=velocity;
+            velocity+=gravity;
+            if (posY > 335) {
+                isJumping = false;
+                posY=335;
+                velocity = -35;
+                gravity = 5;
             }
         }
     }
@@ -69,9 +83,17 @@ public class L8_JumpingMotion extends JPanel implements KeyListener, MouseListen
     }
 
     public void keyPressed(KeyEvent e) {
+        // I need a way to transition to the 
+        // game over state, and we'll use the 'g'
+        // way to do that
         if (gameState == 1) {
             if (e.getKeyChar() == 'g') {
                 gameState = 2;
+            }
+            // If the user presses the spacebar during the 
+            // game, we hve to make T-Rex jump
+            if (e.getKeyChar() == ' ') {
+                isJumping = true;
             }
         }
     }
