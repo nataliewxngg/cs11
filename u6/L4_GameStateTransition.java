@@ -56,11 +56,11 @@ public class L4_GameStateTransition extends JPanel implements KeyListener{
     public static void main(String[] args) {
 
         try {
-            menu = ImageIO.read(new File("menu.png"));
-            credits = ImageIO.read(new File("credits.png"));
-            game = ImageIO.read(new File("game.png"));
-            win = ImageIO.read(new File("win.png"));
-            lose = ImageIO.read(new File("lose.png"));
+            menu = ImageIO.read(new File("u6/assets/menu.png"));
+            credits = ImageIO.read(new File("u6/assets/credits.png"));
+            game = ImageIO.read(new File("u6/assets/game.png"));
+            win = ImageIO.read(new File("u6/assets/win.png"));
+            lose = ImageIO.read(new File("u6/assets/lose.png"));
         }
         catch(Exception e) {
             System.out.println("Something wrong with the image!");

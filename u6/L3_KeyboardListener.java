@@ -31,7 +31,7 @@ public class L3_KeyboardListener extends JPanel implements KeyListener{
 
         // Image Importation
         try {
-            character = ImageIO.read(new File("img.png"));
+            character = ImageIO.read(new File("u6/assets/img.png"));
         }
         catch(Exception e) {
             System.out.println("Something wrong with the image!");

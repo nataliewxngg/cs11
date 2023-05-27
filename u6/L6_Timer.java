@@ -53,7 +53,7 @@ public class L6_Timer extends JPanel implements KeyListener, Runnable {
 
         // Image Importation
         try {
-            character = ImageIO.read(new File("img.png"));
+            character = ImageIO.read(new File("u6/assets/img.png"));
         }
         catch(Exception e) {
             System.out.println("Something wrong with the image!");

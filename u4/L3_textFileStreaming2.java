@@ -13,8 +13,8 @@ public class L3_textFileStreaming2 {
     public static void main(String[] args) throws IOException {
 
         // Global Variables
-        Scanner inputFile = new Scanner(new File("marks.txt"));
-        PrintWriter outputFile = new PrintWriter(new FileWriter("marks2.txt"));
+        Scanner inputFile = new Scanner(new File("u4/assets/marks.txt"));
+        PrintWriter outputFile = new PrintWriter(new FileWriter("u4/assets/marks2.txt"));
 
         double total = 0;
         int entries = 0;

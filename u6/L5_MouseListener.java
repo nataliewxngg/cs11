@@ -51,10 +51,10 @@ public class L5_MouseListener extends JPanel implements MouseListener {
     public static void main(String[] args) {
         // Image Importation
         try {
-            l5start = ImageIO.read(new File("l5start.png"));
-            l5game = ImageIO.read(new File("l5game.png"));
-            l5pause = ImageIO.read(new File("l5pause.png"));
-            l5go = ImageIO.read(new File("l5go.png"));
+            l5start = ImageIO.read(new File("u6/assets/l5start.png"));
+            l5game = ImageIO.read(new File("u6/assets/l5game.png"));
+            l5pause = ImageIO.read(new File("u6/assets/l5pause.png"));
+            l5go = ImageIO.read(new File("u6/assets/l5go.png"));
         }
         catch(Exception e) {
             System.out.println("Something wrong with the image!");

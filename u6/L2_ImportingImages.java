@@ -25,7 +25,7 @@ public class L2_ImportingImages extends JPanel {
 
         // Image Importation
         try {
-            background = ImageIO.read(new File("background.jpg"));
+            background = ImageIO.read(new File("u6/assets/background.jpg"));
         }
         catch(Exception e) {
             System.out.println("Something wrong with the image!");

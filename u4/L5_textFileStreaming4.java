@@ -66,8 +66,8 @@ public class L5_textFileStreaming4 {
     }
 
     public static void main(String[] args) throws IOException {
-        Scanner inputFile = new Scanner(new File("marksWithNames.txt"));
-        PrintWriter outputFile = new PrintWriter(new FileWriter("marksWithNames2.csv"));
+        Scanner inputFile = new Scanner(new File("u4/assets/marksWithNames.txt"));
+        PrintWriter outputFile = new PrintWriter(new FileWriter("u4/assets/marksWithNames2.csv"));
         String s;
 
         while (inputFile.hasNextLine()) {

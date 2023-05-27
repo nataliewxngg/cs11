@@ -16,9 +16,9 @@ public class L2_textFileStreaming1 {
     public static void main(String[] args) throws IOException {
 
         // To stream a text file, we need to first create a Scanner
-        Scanner inputFile = new Scanner(new File("sample.txt"));
+        Scanner inputFile = new Scanner(new File("u4/assets/sample.txt"));
         // To export a text file, we need to create a PrintWriter
-        PrintWriter outputFile = new PrintWriter(new FileWriter("sample2.txt"));
+        PrintWriter outputFile = new PrintWriter(new FileWriter("u4/assets/sample2.txt"));
 
         String s;
 

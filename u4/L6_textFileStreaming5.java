@@ -35,8 +35,8 @@ public class L6_textFileStreaming5 {
     public static void main(String[] args) throws IOException {
 
         // Global Variables
-        Scanner inputFile = new Scanner(new File("dates.txt"));
-        PrintWriter outputFile = new PrintWriter(new FileWriter("dates2.txt"));
+        Scanner inputFile = new Scanner(new File("u4/assets/dates.txt"));
+        PrintWriter outputFile = new PrintWriter(new FileWriter("u4/assets/dates2.txt"));
         
         // Main Body Code
         while (inputFile.hasNextLine()) {

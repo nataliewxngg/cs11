@@ -29,8 +29,8 @@ public class L4_textFileStreaming3 {
     public static void main(String[] args) throws IOException{
 
         // Global Variables
-        Scanner inputFile = new Scanner(new File("ics3unamelist.txt"));
-        PrintWriter outputFile = new PrintWriter(new FileWriter("newnamelist.txt"));
+        Scanner inputFile = new Scanner(new File("u4/assets/ics3unamelist.txt"));
+        PrintWriter outputFile = new PrintWriter(new FileWriter("u4/assets/newnamelist.txt"));
 
         // Main Body
         while (inputFile.hasNextLine()) {

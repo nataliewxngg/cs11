@@ -22,8 +22,8 @@ public class L7_textFileStreaming {
     public static void main(String[] args) throws IOException {
         
         // Variables
-        Scanner inputFile = new Scanner(new File("marksWithNames2.txt"));
-        PrintWriter outputFile = new PrintWriter(new FileWriter("reportCard.txt"));
+        Scanner inputFile = new Scanner(new File("u5/assets/marksWithNames2.txt"));
+        PrintWriter outputFile = new PrintWriter(new FileWriter("u5/assets/reportCard.txt"));
         String[] firstNameArray = new String[24];
         String[] lastNameArray = new String[24];
         double[] termArray = new double[24];
