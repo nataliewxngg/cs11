@@ -102,13 +102,13 @@ public class L8_JumpingMotion extends JPanel implements KeyListener, MouseListen
 
         // Image Importation
         try {
-            stateImages[0] = ImageIO.read(new File("l8start.png"));
-            stateImages[1] = ImageIO.read(new File("l8bg.png"));
-            stateImages[2] = ImageIO.read(new File("l8gameover.png"));
+            stateImages[0] = ImageIO.read(new File("u6/assets/l8start.png"));
+            stateImages[1] = ImageIO.read(new File("u6/assets/l8bg.png"));
+            stateImages[2] = ImageIO.read(new File("u6/assets/l8gameover.png"));
 
-            trex[0] = ImageIO.read(new File("trexleft.png"));
-            trex[1] = ImageIO.read(new File("trexright.png"));
-            trex[2] = ImageIO.read(new File("trexjump.png"));
+            trex[0] = ImageIO.read(new File("u6/assets/trexleft.png"));
+            trex[1] = ImageIO.read(new File("u6/assets/trexright.png"));
+            trex[2] = ImageIO.read(new File("u6/assets/trexjump.png"));
         }
 
         catch(Exception e) {
