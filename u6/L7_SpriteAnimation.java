@@ -45,10 +45,10 @@ public class L7_SpriteAnimation extends JPanel implements Runnable{
 
         // Image Importation
         try {
-            pikachu[0] = ImageIO.read(new File("pikachu0.png"));
-            pikachu[1] = ImageIO.read(new File("pikachu1.png"));
-            pikachu[2] = ImageIO.read(new File("pikachu2.png"));
-            pikachu[3] = ImageIO.read(new File("pikachu3.png"));
+            pikachu[0] = ImageIO.read(new File("u6/assets/pikachu0.png"));
+            pikachu[1] = ImageIO.read(new File("u6/assets/pikachu1.png"));
+            pikachu[2] = ImageIO.read(new File("u6/assets/pikachu2.png"));
+            pikachu[3] = ImageIO.read(new File("u6/assets/pikachu3.png"));
         }
         catch(Exception e) {
             System.out.println("Something wrong with the image!");
