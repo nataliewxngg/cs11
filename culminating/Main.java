@@ -33,7 +33,7 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
 
     public Main() {
         // JPanel default settings
-        setPreferredSize(new Dimension(700, 361));
+        setPreferredSize(new Dimension(700, 360));
 
         // Add MouseListener and KeyListener
         this.setFocusable(true);
