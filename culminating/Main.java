@@ -13,9 +13,11 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
     // Global Variables
     public static int state = 0; // 0 - Menu
                                  // 1 - Credits
-                                 // 2 - In-Game
-                                 // 3 - Pause
-                                 // 4 - Game Over
+                                 // 2 - Rules
+                                 // 3 - # of Players Selection
+                                 // 4 - In-Game
+                                 // 5 - Pause
+                                 // 6 - Game Over
 
     public static int spriteNo = 0;
     public static int frameController = 0;
@@ -58,9 +60,27 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
                 frameController = 0;
             }
         }
+
     }
 
     public void mousePressed(MouseEvent e) {
+        System.out.printf("x: %d, y: %d%n", e.getX(), e.getY());
+
+        if (state == 0) {
+            if (e.getX() >= 284 && e.getX() <= 365 && e.getY() >= 79 && e.getY() <= 95) {
+                state = 3; // Play
+            } else if (e.getX() >= 284 && e.getX() <= 364 && e.getY() >= 105 && e.getY() <= 122) {
+                state = 2; // Rules
+            } else if (e.getX() >= 264 && e.getX() <= 382 && e.getY() >= 132 && e.getY() <= 146) {
+                state = 1; // Credits
+            }
+        }
+
+        else if (state == 1) {
+            if (e.getX() >= 528 && e.getX() <= 545 && e.getY() >= 48 && e.getY() <= 61) {
+                state = 0;
+            }
+        }
     }
 
     public void mouseEntered(MouseEvent e) {
@@ -70,11 +90,17 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
     }
 
     public void keyPressed(KeyEvent e) {
+        if (state == 1) {
+            if (e.getKeyChar() == ' ') {
+                state = 0;
+            }
+        }
     }
 
     public static void main(String[] args) {
         try {
-            stateImages[0] = ImageIO.read(new File("culminating/assets/menu.png"));
+            stateImages[0] = ImageIO.read(new File("culminating/assets/0menu.png"));
+            stateImages[1] = ImageIO.read(new File("culminating/assets/1credits.png"));
 
             dogIdle[0] = ImageIO.read(new File("culminating/assets/sprites/dog/dogIdle0.png"));
             dogIdle[1] = ImageIO.read(new File("culminating/assets/sprites/dog/dogIdle1.png"));
