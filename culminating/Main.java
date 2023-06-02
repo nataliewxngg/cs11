@@ -18,6 +18,8 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
                                  // 4 - In-Game
                                  // 5 - Pause
                                  // 6 - Game Over
+    public static boolean twoPlayers = false;
+    public static boolean paused = false;
 
     public static int spriteNo = 0;
     public static int frameController = 0;
@@ -28,7 +30,7 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
     public static int birdxPos = 0;
     public static int birdyPos = 180;
 
-    public static BufferedImage[] stateImages = new BufferedImage[4];
+    public static BufferedImage[] stateImages = new BufferedImage[7];
 
     public static BufferedImage[] dogIdle = new BufferedImage[4];
     public static BufferedImage[] dogRun = new BufferedImage[6];
@@ -51,7 +53,7 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
         super.paintComponent(g); // Clears the screen
         g.drawImage(stateImages[state], 0, 0, null);
 
-        if (state == 0) {
+        if (state == 0 || state == 3) {
             frameController++;
             g.drawImage(dogIdle[spriteNo], dogxPos, dogyPos, null);
 
@@ -76,22 +78,53 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
             }
         }
 
-        else if (state == 1) {
+        else if (state == 1 || state == 2) {
             if (e.getX() >= 528 && e.getX() <= 545 && e.getY() >= 48 && e.getY() <= 61) {
                 state = 0;
             }
         }
-    }
 
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    public void mouseExited(MouseEvent e) {
+        else if (state == 3) {
+            if (e.getX() >= 260 && e.getX() <= 392 && e.getY() >= 78 && e.getY() <= 99) {
+                state = 4; // one player
+            } else if (e.getX() >= 247 && e.getX() <= 398 && e.getY() >= 105 && e.getY() <= 125) {
+                twoPlayers = true;
+                state = 4;
+            } else if (e.getX() >= 276 && e.getX() <= 376 && e.getY() >= 132 && e.getY() <= 146) {
+                state = 0; // menu
+            }
+        }
     }
 
     public void keyPressed(KeyEvent e) {
-        if (state == 1) {
+        if (state == 1 || state == 2) {
             if (e.getKeyChar() == ' ') {
+                state = 0;
+            }
+        } else if (state == 4) {
+            if (e.getKeyChar() == 'g') {
+                state = 6;
+            } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                if (!paused) {
+                    state = 5;
+                } else
+                    state = 4;
+            }
+        } else if (state == 5) {
+            if (e.getKeyChar() == 'r') {
+                state = 4;
+                // reset all vars
+            } else if (e.getKeyChar() == 'm') {
+                state = 0;
+                // reset all vars
+            } else if (e.getKeyChar() == ' ') {
+                state = 4;
+            }
+        } else if (state == 6) {
+            if (e.getKeyChar() == ' ') {
+                state = 4;
+                // reset all vars
+            } else if (e.getKeyChar() == 'm') {
                 state = 0;
             }
         }
@@ -101,6 +134,11 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
         try {
             stateImages[0] = ImageIO.read(new File("culminating/assets/0menu.png"));
             stateImages[1] = ImageIO.read(new File("culminating/assets/1credits.png"));
+            stateImages[2] = ImageIO.read(new File("culminating/assets/2rules.png"));
+            stateImages[3] = ImageIO.read(new File("culminating/assets/3selectNumOfPlayers.png"));
+            stateImages[4] = ImageIO.read(new File("culminating/assets/4inGame.png"));
+            stateImages[5] = ImageIO.read(new File("culminating/assets/5pause.png"));
+            stateImages[6] = ImageIO.read(new File("culminating/assets/6gameOver.png"));
 
             dogIdle[0] = ImageIO.read(new File("culminating/assets/sprites/dog/dogIdle0.png"));
             dogIdle[1] = ImageIO.read(new File("culminating/assets/sprites/dog/dogIdle1.png"));
@@ -146,5 +184,11 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
     }
 
     public void keyReleased(KeyEvent e) {
+    }
+
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    public void mouseExited(MouseEvent e) {
     }
 }
