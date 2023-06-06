@@ -18,6 +18,7 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
                                  // 4 - In-Game
                                  // 5 - Pause
                                  // 6 - Game Over
+
     public static boolean twoPlayers = false;
     public static boolean paused = false;
 
@@ -34,6 +35,8 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
 
     public static BufferedImage[] dogIdle = new BufferedImage[4];
     public static BufferedImage[] dogRun = new BufferedImage[6];
+
+    public static BufferedImage arrow;
 
     public Main() {
         // JPanel default settings
@@ -60,6 +63,11 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
             if (frameController == 4) {
                 spriteNo = (spriteNo + 1) % 4;
                 frameController = 0;
+            }
+
+            // arrow
+            if (state == 0) {
+                g.drawImage(arrow, 250, 81, null);
             }
         }
 
@@ -151,6 +159,8 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
             dogRun[3] = ImageIO.read(new File("culminating/assets/sprites/dog/dogRun3.png"));
             dogRun[4] = ImageIO.read(new File("culminating/assets/sprites/dog/dogRun4.png"));
             dogRun[5] = ImageIO.read(new File("culminating/assets/sprites/dog/dogRun5.png"));
+
+            arrow = ImageIO.read(new File("culminating/assets/arrow.png"));
 
         } catch (Exception e) {
             System.out.println("Something wrong with the image!");
