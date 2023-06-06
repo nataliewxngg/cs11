@@ -166,7 +166,7 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
             System.out.println("Something wrong with the image!");
         }
 
-        JFrame frame = new JFrame("PLATFORMERS");
+        JFrame frame = new JFrame("FLOOD ESCAPE");
         Main panel = new Main();
         frame.add(panel);
         frame.setVisible(true);
