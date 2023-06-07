@@ -105,10 +105,6 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
         else if (state == 2) { // rules
             if (e.getX() >= 528 && e.getX() <= 545 && e.getY() >= 48 && e.getY() <= 61) {
                 state = 0; // return to menu
-
-                menuArrowxPos = 255;
-                menuArrowyPos = 80;
-                arrowState = 1;
             }
         }
 
@@ -126,9 +122,7 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
                 menuArrowyPos = 80;
                 arrowState = 1;
             }
-
         }
-
     }
 
     public void keyPressed(KeyEvent e) {
@@ -163,6 +157,20 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
                 menuArrowyPos = 130;
                 arrowState = 3;
             }
+
+            else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                if (arrowState == 1) {
+                    state = 3; // Select num of players
+
+                    selectArrowxPos = 230;
+                    selectArrowyPos = 80;
+                    arrowState = 1;
+                } else if (arrowState == 2)
+                    state = 2;
+                else if (arrowState == 3) {
+                    state = 1;
+                }
+            }
         }
 
         else if (state == 1) { // credits
@@ -177,7 +185,7 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
             }
         }
 
-        else if (state == 3) {
+        else if (state == 3) { // select # of players
 
             // down arrow
             if (e.getKeyCode() == KeyEvent.VK_DOWN && arrowState == 1) {
@@ -208,6 +216,20 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
                 selectArrowyPos = 130;
                 arrowState = 3;
             }
+
+            else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                if (arrowState == 1) {
+                    state = 4; // 1 PLAYER
+                } else if (arrowState == 2)
+                    state = 4; // 2 PLAYERS
+                else if (arrowState == 3) {
+                    state = 0;
+
+                    menuArrowxPos = 255;
+                    menuArrowyPos = 80;
+                    arrowState = 1;
+                }
+            }
         }
 
         else if (state == 4) { // in-game
@@ -231,6 +253,10 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
 
             else if (e.getKeyChar() == 'm') {
                 state = 0; // return to menu
+
+                menuArrowxPos = 255;
+                menuArrowyPos = 80;
+                arrowState = 1;
             }
         }
 
@@ -242,6 +268,10 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
 
             else if (e.getKeyChar() == 'm') {
                 state = 0; // return to menu
+
+                menuArrowxPos = 255;
+                menuArrowyPos = 80;
+                arrowState = 1;
             }
         }
 
