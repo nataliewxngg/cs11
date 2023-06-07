@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.imageio.ImageIO;
 
-public class Main extends JPanel implements KeyListener, MouseListener, Runnable {
+public class test extends JPanel implements KeyListener, MouseListener, Runnable {
 
     // Global Variables
     public static int state = 0; // 0 - Menu
@@ -24,15 +24,12 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
 
     public static int dogxPos = 320;
     public static int dogyPos = 240;
+    public static int arrowxPos = 255;
+    public static int arrowyPos = 80;
 
     // arrow positions
-    public static int menuArrowxPos = 255;
-    public static int menuArrowyPos = 80;
-
-    public static int selectArrowxPos = 230;
-    public static int selectArrowyPos = 80;
-
-    public static int arrowState = 1;
+    public static int menuArrow = 1;
+    public static int selectArrow = 1;
 
     public static boolean twoPlayers;
 
@@ -42,7 +39,7 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
     public static BufferedImage[] dogRun = new BufferedImage[6];
     public static BufferedImage arrow;
 
-    public Main() {
+    public test() {
         // JPanel default settings
         setPreferredSize(new Dimension(700, 360));
 
@@ -68,23 +65,21 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
                 spriteNo = (spriteNo + 1) % 4;
                 frameController = 0;
             }
-            if (state == 0)
-                g.drawImage(arrow, menuArrowxPos, menuArrowyPos, null);
-            else
-                g.drawImage(arrow, selectArrowxPos, selectArrowyPos, null);
         }
+
+        if (state == 0)
+            g.drawImage(arrow, arrowxPos, arrowyPos, null);
+        if (state == 1)
+            g.drawImage(arrow, arrowxPos, arrowyPos, null);
+
     }
 
     public void mousePressed(MouseEvent e) {
         System.out.printf("x: %d, y: %d%n", e.getX(), e.getY());
 
-        if (state == 0) { // menu
+        if (state == 0) {
             if (e.getX() >= 284 && e.getX() <= 365 && e.getY() >= 79 && e.getY() <= 95) {
                 state = 3; // Select num of players
-
-                selectArrowxPos = 230;
-                selectArrowyPos = 80;
-                arrowState = 1;
             } else if (e.getX() >= 284 && e.getX() <= 364 && e.getY() >= 105 && e.getY() <= 122) {
                 state = 2; // Rules
             } else if (e.getX() >= 264 && e.getX() <= 382 && e.getY() >= 132 && e.getY() <= 146) {
@@ -92,156 +87,121 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
             }
         }
 
-        else if (state == 1) { // credits
-            if (e.getX() >= 528 && e.getX() <= 545 && e.getY() >= 48 && e.getY() <= 61) {
-                state = 0; // return to menu
-
-                menuArrowxPos = 255;
-                menuArrowyPos = 80;
-                arrowState = 1;
-            }
-        }
-
-        else if (state == 2) { // rules
-            if (e.getX() >= 528 && e.getX() <= 545 && e.getY() >= 48 && e.getY() <= 61) {
-                state = 0; // return to menu
-
-                menuArrowxPos = 255;
-                menuArrowyPos = 80;
-                arrowState = 1;
-            }
-        }
-
-        else if (state == 3) { // # of players selection
+        else if (state == 3) {
             if (e.getX() >= 259 && e.getY() >= 81 && e.getX() <= 387 && e.getY() <= 96) {
-                state = 4; // play (SOLO)
+                state = 4; // play
                 twoPlayers = false;
             } else if (e.getX() >= 250 && e.getY() >= 108 && e.getX() <= 397 && e.getY() <= 123) {
-                state = 4; // play (TWO PLAYERS)
+                state = 4; // play
                 twoPlayers = true;
             } else if (e.getX() >= 276 && e.getY() >= 137 && e.getX() <= 372 && e.getY() <= 147) {
-                state = 0; // return to menu
-
-                menuArrowxPos = 255;
-                menuArrowyPos = 80;
-                arrowState = 1;
+                state = 0;
             }
 
+        }
+
+        else if (state == 1) {
+            if (e.getX() >= 528 && e.getX() <= 545 && e.getY() >= 48 && e.getY() <= 61) {
+                state = 0;
+            }
+        }
+
+        else if (state == 2) {
+            if (e.getX() >= 528 && e.getX() <= 545 && e.getY() >= 48 && e.getY() <= 61) {
+                state = 0;
+            }
         }
 
     }
 
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    public void mouseExited(MouseEvent e) {
+    }
+
     public void keyPressed(KeyEvent e) {
-
-        if (state == 0) {
-            // down arrow
-            if (e.getKeyCode() == KeyEvent.VK_DOWN && arrowState == 1) {
-                menuArrowxPos = 260;
-                menuArrowyPos = 105;
-                arrowState = 2;
-            } else if (e.getKeyCode() == KeyEvent.VK_DOWN && arrowState == 2) {
-                menuArrowxPos = 240;
-                menuArrowyPos = 130;
-                arrowState = 3;
-            } else if (e.getKeyCode() == KeyEvent.VK_DOWN && arrowState == 3) {
-                menuArrowxPos = 255;
-                menuArrowyPos = 80;
-                arrowState = 1;
-            }
-
-            // up arrow
-            else if (e.getKeyCode() == KeyEvent.VK_UP && arrowState == 3) {
-                menuArrowxPos = 260;
-                menuArrowyPos = 105;
-                arrowState = 2;
-            } else if (e.getKeyCode() == KeyEvent.VK_UP && arrowState == 2) {
-                menuArrowxPos = 255;
-                menuArrowyPos = 80;
-                arrowState = 1;
-            } else if (e.getKeyCode() == KeyEvent.VK_UP && arrowState == 1) {
-                menuArrowxPos = 240;
-                menuArrowyPos = 130;
-                arrowState = 3;
-            }
-        }
-
-        else if (state == 1) { // credits
+        if (state == 1) {
             if (e.getKeyChar() == ' ') {
-                state = 0; // return to menu
+                state = 0;
             }
         }
 
-        else if (state == 2) { // rules
+        if (state == 2) {
             if (e.getKeyChar() == ' ') {
-                state = 0; // return to menu
+                state = 0;
             }
         }
 
-        else if (state == 3) {
-
-            // down arrow
-            if (e.getKeyCode() == KeyEvent.VK_DOWN && arrowState == 1) {
-                selectArrowxPos = 220;
-                selectArrowyPos = 105;
-                arrowState = 2;
-            } else if (e.getKeyCode() == KeyEvent.VK_DOWN && arrowState == 2) {
-                selectArrowxPos = 240;
-                selectArrowyPos = 130;
-                arrowState = 3;
-            } else if (e.getKeyCode() == KeyEvent.VK_DOWN && arrowState == 3) {
-                selectArrowxPos = 230;
-                selectArrowyPos = 80;
-                arrowState = 1;
-            }
-
-            // up arrow
-            else if (e.getKeyCode() == KeyEvent.VK_UP && arrowState == 3) {
-                selectArrowxPos = 220;
-                selectArrowyPos = 105;
-                arrowState = 2;
-            } else if (e.getKeyCode() == KeyEvent.VK_UP && arrowState == 2) {
-                selectArrowxPos = 230;
-                selectArrowyPos = 80;
-                arrowState = 1;
-            } else if (e.getKeyCode() == KeyEvent.VK_UP && arrowState == 1) {
-                selectArrowxPos = 240;
-                selectArrowyPos = 130;
-                arrowState = 3;
-            }
-        }
-
-        else if (state == 4) { // in-game
+        if (state == 4) {
             if (e.getKeyChar() == 'p') {
-                state = 5; // pause
+                state = 5;
             } else if (e.getKeyChar() == 'g') {
-                state = 6; // game over
-                // only for transitions
+                state = 6;
             }
         }
 
-        else if (state == 5) { // pause
+        if (state == 5) {
             if (e.getKeyChar() == 'r') {
                 state = 4;
-                // reset all vars in here to restart the game
             }
 
             else if (e.getKeyChar() == ' ') {
-                state = 4; // resume game
+                state = 4;
             }
 
             else if (e.getKeyChar() == 'm') {
-                state = 0; // return to menu
+                state = 0;
             }
         }
 
-        else if (state == 6) { // game over
-            // reset all game variables here
+        if (state == 6) {
             if (e.getKeyChar() == ' ') {
-                state = 4; // restart
+                state = 4;
             }
 
             else if (e.getKeyChar() == 'm') {
-                state = 0; // return to menu
+                state = 0;
+            }
+        }
+
+        if (state == 0) {
+            if (e.getKeyCode() == 40 && menuArrow == 1) {
+                arrowxPos = 260;
+                arrowyPos = 105;
+                menuArrow = 2;
+            } else if (e.getKeyCode() == 40 && menuArrow == 2) {
+                arrowxPos = 240;
+                arrowyPos = 130;
+                menuArrow = 3;
+            } else if (e.getKeyCode() == 38 && menuArrow == 3) {
+                arrowxPos = 260;
+                arrowyPos = 105;
+                menuArrow = 2;
+            } else if (e.getKeyCode() == 38 && menuArrow == 2) {
+                arrowxPos = 255;
+                arrowyPos = 80;
+                menuArrow = 1;
+            }
+        }
+
+        if (state == 1) {
+            if (e.getKeyCode() == 40 && selectArrow == 1) {
+                arrowxPos = 260;
+                arrowyPos = 105;
+                menuArrow = 2;
+            } else if (e.getKeyCode() == 40 && selectArrow == 2) {
+                arrowxPos = 240;
+                arrowyPos = 130;
+                menuArrow = 3;
+            } else if (e.getKeyCode() == 38 && selectArrow == 3) {
+                arrowxPos = 260;
+                arrowyPos = 105;
+                menuArrow = 2;
+            } else if (e.getKeyCode() == 38 && selectArrow == 2) {
+                arrowxPos = 255;
+                arrowyPos = 80;
+                menuArrow = 1;
             }
         }
 
@@ -276,7 +236,7 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
         }
 
         JFrame frame = new JFrame("FLOOD ESCAPE");
-        Main panel = new Main();
+        test panel = new test();
         frame.add(panel);
         frame.setVisible(true);
         frame.pack();
@@ -297,12 +257,6 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
     }
 
     public void mouseReleased(MouseEvent e) {
-    }
-
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    public void mouseExited(MouseEvent e) {
     }
 
     public void keyTyped(KeyEvent e) {
