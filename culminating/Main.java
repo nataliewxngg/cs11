@@ -18,12 +18,15 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
                                  // 4 - In-Game
                                  // 5 - Pause
                                  // 6 - Game Over
-
     public static int spriteNo = 0;
     public static int frameController = 0;
 
+    // Character Positions
     public static int dogxPos = 320;
     public static int dogyPos = 240;
+
+    public static int catxPos = 400;
+    public static int catyPos = 240;
 
     // arrow positions
     public static int menuArrowxPos = 255;
@@ -34,12 +37,23 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
 
     public static int arrowState = 1;
 
+    // twoPlayers
     public static boolean twoPlayers;
 
-    public static BufferedImage[] stateImages = new BufferedImage[7];
+    public static boolean upPressed = false;
+    public static boolean leftPressed = false;
+    public static boolean rightPressed = false;
 
+    public static boolean wPressed = false;
+    public static boolean aPressed = false;
+    public static boolean dPressed = false;
+
+    // Buffered Images
+    public static BufferedImage[] stateImages = new BufferedImage[7];
     public static BufferedImage[] dogIdle = new BufferedImage[4];
     public static BufferedImage[] dogRun = new BufferedImage[6];
+    public static BufferedImage[] catIdle = new BufferedImage[4];
+    public static BufferedImage[] catRun = new BufferedImage[6];
     public static BufferedImage arrow;
 
     public Main() {
@@ -72,6 +86,36 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
                 g.drawImage(arrow, menuArrowxPos, menuArrowyPos, null);
             else
                 g.drawImage(arrow, selectArrowxPos, selectArrowyPos, null);
+        }
+
+        if (state == 4) {
+            g.drawImage(stateImages[state], 0, -339, null); // move y coord down until it turns 0;
+            frameController++;
+
+            if (!twoPlayers) {
+                if (frameController == 4) {
+                    spriteNo = (spriteNo + 1) % 4;
+                    frameController = 0;
+                }
+
+                // if nothing is pressed
+                g.drawImage(dogIdle[spriteNo], dogxPos, dogyPos, null); // doy y pos must be going down with the same
+                                                                        // increment
+                                                                        // as the y coord of the screen
+
+                // put other floating islands/blocks here
+            } else {
+                if (frameController == 4) {
+                    spriteNo = (spriteNo + 1) % 4;
+                    frameController = 0;
+                }
+
+                // if nothing is pressed
+                g.drawImage(dogIdle[spriteNo], dogxPos, dogyPos, null);
+                g.drawImage(catIdle[spriteNo], catxPos, catyPos, null);
+
+                // put other floating islands/blocks here
+            }
         }
     }
 
@@ -220,9 +264,10 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
             else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                 if (arrowState == 1) {
                     state = 4; // 1 PLAYER
-                } else if (arrowState == 2)
+                } else if (arrowState == 2) {
                     state = 4; // 2 PLAYERS
-                else if (arrowState == 3) {
+                    twoPlayers = true;
+                } else if (arrowState == 3) {
                     state = 0;
 
                     menuArrowxPos = 255;
@@ -289,6 +334,7 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
 
             arrow = ImageIO.read(new File("culminating/assets/arrow.png"));
 
+            // dog sprites
             dogIdle[0] = ImageIO.read(new File("culminating/assets/sprites/dog/dogIdle0.png"));
             dogIdle[1] = ImageIO.read(new File("culminating/assets/sprites/dog/dogIdle1.png"));
             dogIdle[2] = ImageIO.read(new File("culminating/assets/sprites/dog/dogIdle2.png"));
@@ -300,6 +346,13 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
             dogRun[3] = ImageIO.read(new File("culminating/assets/sprites/dog/dogRun3.png"));
             dogRun[4] = ImageIO.read(new File("culminating/assets/sprites/dog/dogRun4.png"));
             dogRun[5] = ImageIO.read(new File("culminating/assets/sprites/dog/dogRun5.png"));
+            // ** need a dog running left
+
+            // cat sprites
+            catIdle[0] = ImageIO.read(new File("culminating/assets/sprites/cat/catIdle0.png"));
+            catIdle[1] = ImageIO.read(new File("culminating/assets/sprites/cat/catIdle1.png"));
+            catIdle[2] = ImageIO.read(new File("culminating/assets/sprites/cat/catIdle2.png"));
+            catIdle[3] = ImageIO.read(new File("culminating/assets/sprites/cat/catIdle3.png"));
 
         } catch (Exception e) {
             System.out.println("Something wrong with the image!");
