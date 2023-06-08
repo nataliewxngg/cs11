@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.imageio.ImageIO;
 
-public class Main extends JPanel implements KeyListener, MouseListener, Runnable {
+public class Main extends JPanel implements KeyListener, Runnable {
 
     // Global Variables
     public static int state = 0; // 0 - Menu
@@ -21,6 +21,8 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
     public static int idleSpriteNo = 0;
     public static int runSpriteNo = 0;
     public static int frameController = 0;
+
+    public static int bgyPos = -700;
 
     // Character Positions
     public static int dogxPos = 320;
@@ -74,9 +76,8 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
         // JPanel default settings
         setPreferredSize(new Dimension(700, 360));
 
-        // Add MouseListener and KeyListener
+        // Add KeyListener
         this.setFocusable(true);
-        addMouseListener(this);
         addKeyListener(this);
 
         // Timer
@@ -103,7 +104,14 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
         }
 
         if (state == 4) {
-            g.drawImage(stateImages[state], 0, -339, null); // move y coord down until it turns 0;
+            g.drawImage(stateImages[state], 0, bgyPos, null); // move y coord down until it turns 0;
+
+            if (bgyPos < 0) {
+                bgyPos += 0.00000000001;
+                System.out.println(bgyPos);
+            } else
+                bgyPos = -245;
+
             frameController++;
 
             if (frameController == 4) {
@@ -199,57 +207,6 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
                 }
 
                 // put other floating islands/blocks here
-            }
-        }
-    }
-
-    public void mousePressed(MouseEvent e) {
-        System.out.printf("x: %d, y: %d%n", e.getX(), e.getY());
-
-        if (state == 0) { // menu
-            if (e.getX() >= 284 && e.getX() <= 365 && e.getY() >= 79 && e.getY() <= 95) {
-                state = 3; // Select num of players
-
-                selectArrowxPos = 230;
-                selectArrowyPos = 80;
-                arrowState = 1;
-            } else if (e.getX() >= 284 && e.getX() <= 364 && e.getY() >= 105 && e.getY() <= 122) {
-                state = 2; // Rules
-            } else if (e.getX() >= 264 && e.getX() <= 382 && e.getY() >= 132 && e.getY() <= 146) {
-                state = 1; // Credits
-            }
-        }
-
-        else if (state == 1) { // credits
-            if (e.getX() >= 528 && e.getX() <= 545 && e.getY() >= 48 && e.getY() <= 61) {
-                state = 0; // return to menu
-
-                menuArrowxPos = 255;
-                menuArrowyPos = 80;
-                arrowState = 1;
-            }
-        }
-
-        else if (state == 2) { // rules
-            if (e.getX() >= 528 && e.getX() <= 545 && e.getY() >= 48 && e.getY() <= 61) {
-                state = 0; // return to menu
-            }
-        }
-
-        else if (state == 3) { // # of players selection
-            if (e.getX() >= 259 && e.getY() >= 81 && e.getX() <= 387 && e.getY() <= 96) {
-                state = 4; // play (SOLO)
-                twoPlayers = false;
-            } else if (e.getX() >= 250 && e.getY() >= 108 && e.getX() <= 397 && e.getY() <= 123) {
-                state = 4; // play (TWO PLAYERS)
-                twoPlayers = true;
-                dogxPos = 280;
-            } else if (e.getX() >= 276 && e.getY() >= 137 && e.getX() <= 372 && e.getY() <= 147) {
-                state = 0; // return to menu
-
-                menuArrowxPos = 255;
-                menuArrowyPos = 80;
-                arrowState = 1;
             }
         }
     }
@@ -488,7 +445,7 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
             System.out.println("Something wrong with the image!");
         }
 
-        JFrame frame = new JFrame("FLOOD ESCAPE");
+        JFrame frame = new JFrame("Flood Escape");
         Main panel = new Main();
         frame.add(panel);
         frame.setVisible(true);
@@ -506,18 +463,6 @@ public class Main extends JPanel implements KeyListener, MouseListener, Runnable
     }
 
     // Useless Methods
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    public void mouseExited(MouseEvent e) {
-    }
-
     public void keyTyped(KeyEvent e) {
     }
 }
