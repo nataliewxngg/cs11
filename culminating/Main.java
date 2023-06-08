@@ -110,7 +110,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
                 bgyPos += 0.00000000001;
                 System.out.println(bgyPos);
             } else
-                bgyPos = -245;
+                bgyPos = -243;
 
             frameController++;
 
