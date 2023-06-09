@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.imageio.ImageIO;
 
-public class Main extends JPanel implements KeyListener, Runnable {
+public class test extends JPanel implements KeyListener, Runnable {
 
     // Global Variables
     public static int state = 0; // 0 - Menu
@@ -23,17 +23,10 @@ public class Main extends JPanel implements KeyListener, Runnable {
     public static int frameController = 0;
 
     public static int bgyPos = -700;
-    public static double bgMoveUpFactor = 0.00000000001;
-
-    public static int[] landxPos = { 50, 150, 260, 300, 430, 520, 570, 630, 660 };
 
     // Character Positions
     public static int dogxPos = 320;
     public static int dogyPos = 240;
-
-    // used for jumping (initial value doesn't matter)
-    public static int dogOriginalyPos = 240;
-    public static int catOriginalyPos = 240;
 
     public static int catxPos = 360;
     public static int catyPos = 240;
@@ -73,8 +66,6 @@ public class Main extends JPanel implements KeyListener, Runnable {
     // Buffered Images
     public static BufferedImage[] stateImages = new BufferedImage[7];
 
-    public static BufferedImage land;
-
     public static BufferedImage[] dogIdle = new BufferedImage[4];
     public static BufferedImage[] dogIdlel = new BufferedImage[4];
     public static BufferedImage[] dogRun = new BufferedImage[6];
@@ -87,7 +78,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
 
     public static BufferedImage arrow;
 
-    public Main() {
+    public test() {
         // JPanel default settings
         setPreferredSize(new Dimension(700, 360));
 
@@ -106,7 +97,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
 
         if (state == 0 || state == 3) {
             frameController++;
-            g.drawImage(dogIdle[idleSpriteNo], 320, 240, null);
+            g.drawImage(dogIdle[idleSpriteNo], dogxPos, dogyPos, null);
 
             if (frameController == 4) {
                 idleSpriteNo = (idleSpriteNo + 1) % 4;
@@ -119,25 +110,17 @@ public class Main extends JPanel implements KeyListener, Runnable {
         }
 
         if (state == 4) {
+            g.drawImage(stateImages[state], 0, bgyPos, null); // move y coord down until it turns 0;
 
-            g.drawImage(stateImages[state], 0, bgyPos, null); // sky
-
-            if (bgyPos < 0) { // used to accumulate y pos of land and bg
-                bgyPos += bgMoveUpFactor;
-                bgMoveUpFactor += 0.00001;
-                dogyPos += 1;
-                catyPos += 1;
-
-                dogOriginalyPos += 1;
-                catOriginalyPos += 1;
-
+            if (bgyPos < 0) {
+                bgyPos += 0.00000000001;
                 System.out.println(bgyPos);
             } else
                 bgyPos = -245;
 
             frameController++;
 
-            if (frameController == 4) { // for sprites
+            if (frameController == 4) {
                 idleSpriteNo = (idleSpriteNo + 1) % 4;
                 runSpriteNo = (runSpriteNo + 1) % 6;
                 frameController = 0;
@@ -148,10 +131,10 @@ public class Main extends JPanel implements KeyListener, Runnable {
                 if (dogJumping || rightPressed || leftPressed) {
                     if (rightPressed) {
                         dogLookLeft = false;
-                        dogxPos += 5;
+                        dogxPos += 4;
                     }
                     if (leftPressed) {
-                        dogxPos -= 5;
+                        dogxPos -= 4;
                         dogLookLeft = true;
                     }
 
@@ -160,9 +143,9 @@ public class Main extends JPanel implements KeyListener, Runnable {
                             g.drawImage(dogIdlel[idleSpriteNo], dogxPos, dogyPos, null);
                             dogyPos += dogVelocity;
                             dogVelocity += dogGravity;
-                            if (dogyPos > dogOriginalyPos) {
+                            if (dogyPos > 240) {
                                 dogJumping = false;
-                                dogyPos = dogOriginalyPos; // depends on y value of platform dog stands on
+                                dogyPos = 240; // depends on y value of platform dog stands on
 
                                 dogVelocity = -27;
                                 dogGravity = 3;
@@ -175,9 +158,9 @@ public class Main extends JPanel implements KeyListener, Runnable {
                             g.drawImage(dogIdle[idleSpriteNo], dogxPos, dogyPos, null);
                             dogyPos += dogVelocity;
                             dogVelocity += dogGravity;
-                            if (dogyPos > dogOriginalyPos) {
+                            if (dogyPos > 240) {
                                 dogJumping = false;
-                                dogyPos = dogOriginalyPos; // depends on y value of platform dog stands on
+                                dogyPos = 240; // depends on y value of platform dog stands on
 
                                 dogVelocity = -27;
                                 dogGravity = 3;
@@ -207,10 +190,10 @@ public class Main extends JPanel implements KeyListener, Runnable {
                 if (dogJumping || rightPressed || leftPressed) {
                     if (rightPressed) {
                         dogLookLeft = false;
-                        dogxPos += 5;
+                        dogxPos += 4;
                     }
                     if (leftPressed) {
-                        dogxPos -= 5;
+                        dogxPos -= 4;
                         dogLookLeft = true;
                     }
 
@@ -219,9 +202,9 @@ public class Main extends JPanel implements KeyListener, Runnable {
                             g.drawImage(dogIdlel[idleSpriteNo], dogxPos, dogyPos, null);
                             dogyPos += dogVelocity;
                             dogVelocity += dogGravity;
-                            if (dogyPos > dogOriginalyPos) {
+                            if (dogyPos > 240) {
                                 dogJumping = false;
-                                dogyPos = dogOriginalyPos; // depends on y value of platform dog stands on
+                                dogyPos = 240; // depends on y value of platform dog stands on
 
                                 dogVelocity = -27;
                                 dogGravity = 3;
@@ -234,9 +217,9 @@ public class Main extends JPanel implements KeyListener, Runnable {
                             g.drawImage(dogIdle[idleSpriteNo], dogxPos, dogyPos, null);
                             dogyPos += dogVelocity;
                             dogVelocity += dogGravity;
-                            if (dogyPos > dogOriginalyPos) {
+                            if (dogyPos > 240) {
                                 dogJumping = false;
-                                dogyPos = dogOriginalyPos; // depends on y value of platform dog stands on
+                                dogyPos = 240; // depends on y value of platform dog stands on
 
                                 dogVelocity = -27;
                                 dogGravity = 3;
@@ -268,9 +251,9 @@ public class Main extends JPanel implements KeyListener, Runnable {
                             g.drawImage(catIdlel[idleSpriteNo], catxPos, catyPos, null);
                             catyPos += catVelocity;
                             catVelocity += catGravity;
-                            if (catyPos > catOriginalyPos) {
+                            if (catyPos > 240) {
                                 catJumping = false;
-                                catyPos = catOriginalyPos; // depends on y value of platform cat stands on
+                                catyPos = 240; // depends on y value of platform cat stands on
 
                                 catVelocity = -27;
                                 catGravity = 3;
@@ -283,9 +266,9 @@ public class Main extends JPanel implements KeyListener, Runnable {
                             g.drawImage(catIdle[idleSpriteNo], catxPos, catyPos, null);
                             catyPos += catVelocity;
                             catVelocity += catGravity;
-                            if (catyPos > catOriginalyPos) {
+                            if (catyPos > 240) {
                                 catJumping = false;
-                                catyPos = catOriginalyPos; // depends on y value of platform cat stands on
+                                catyPos = 240; // depends on y value of platform cat stands on
 
                                 catVelocity = -27;
                                 catGravity = 3;
@@ -304,22 +287,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
                 // put other floating islands/blocks here
             }
 
-            if (dogyPos >= 360 - 38 || catyPos >= 360 - 38) {
-
-                dogxPos = 320;
-                dogyPos = catyPos = 240;
-                catxPos = 360;
-                bgyPos = -700;
-                bgMoveUpFactor = 0.00000000001;
-
-                rightPressed = leftPressed = dogJumping = wPressed = aPressed = dPressed = catJumping = twoPlayers = false;
-                dogGravity = catVelocity = 3;
-                dogVelocity = catVelocity = -27;
-
-                state = 6;
-            }
         }
-
     }
 
     public void keyPressed(KeyEvent e) {
@@ -440,24 +408,16 @@ public class Main extends JPanel implements KeyListener, Runnable {
             }
 
             // for movement
-            if (e.getKeyCode() == KeyEvent.VK_UP) {
-                if (!dogJumping) {
-                    dogOriginalyPos = dogyPos;
-                    dogJumping = true;
-                }
-            }
+            if (e.getKeyCode() == KeyEvent.VK_UP)
+                dogJumping = true;
             if (e.getKeyCode() == KeyEvent.VK_LEFT)
                 leftPressed = true;
             if (e.getKeyCode() == KeyEvent.VK_RIGHT)
                 rightPressed = true;
 
             if (twoPlayers) {
-                if (e.getKeyChar() == 'w') {
-                    if (!catJumping) {
-                        catOriginalyPos = catyPos;
-                        catJumping = true;
-                    }
-                }
+                if (e.getKeyChar() == 'w')
+                    catJumping = true;
                 if (e.getKeyChar() == 'a')
                     aPressed = true;
                 if (e.getKeyChar() == 'd')
@@ -532,7 +492,6 @@ public class Main extends JPanel implements KeyListener, Runnable {
             stateImages[6] = ImageIO.read(new File("culminating/assets/6gameOver.png"));
 
             arrow = ImageIO.read(new File("culminating/assets/arrow.png"));
-            land = ImageIO.read(new File("culminating/assets/land.png"));
 
             // dog sprites
             dogIdle[0] = ImageIO.read(new File("culminating/assets/sprites/dog/dogIdle0.png"));
@@ -589,7 +548,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
         }
 
         JFrame frame = new JFrame("Flood Escape");
-        Main panel = new Main();
+        test panel = new test();
         frame.add(panel);
         frame.setVisible(true);
         frame.pack();
