@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 
 import java.util.Random;
 
-public class Main extends JPanel implements KeyListener, Runnable {
+public class old extends JPanel implements KeyListener, Runnable {
 
     // Global Variables
     public static Random rand = new Random();
@@ -31,14 +31,9 @@ public class Main extends JPanel implements KeyListener, Runnable {
 
     public static int landx;
     public static int landy;
-    public static int[] landxCoords = new int[10];
-    public static int[] landyCoords = { -150, -100, -50, 0, 50, 100, 150, 175, 200, 250 };
-
-    public static int dogPlatformIndex = -1;
-    public static int catPlatformIndex = -1;
-
-    public static boolean dogOnPlatform = false;
-    public static boolean catOnPlatform = false;
+    public static int[] landxCoords = new int[8];
+    public static int[] landyCoords = { 0, 100, 150, 175, 200, 250, 300, 350 };
+    public static int platformIndex = -1;
 
     // Character Positions
     public static int dogxPos = 320;
@@ -83,6 +78,8 @@ public class Main extends JPanel implements KeyListener, Runnable {
     public static int catGravity = 3;
     public static int catVelocity = -27;
 
+    public static int dogFallGravity = 3;
+    public static int dogFallVelocity = 0;
     public static int catFallGravity = 3;
     public static int catFallVelocity = 0;
 
@@ -104,7 +101,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
     public static BufferedImage arrow;
 
     // platform(s) generation
-    public Main() {
+    public old() {
         // JPanel default settings
         setPreferredSize(new Dimension(700, 360));
 
@@ -134,21 +131,13 @@ public class Main extends JPanel implements KeyListener, Runnable {
             dogGravity = catVelocity = 3;
             dogVelocity = catVelocity = -27;
 
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 8; i++) {
                 landx = rand.nextInt(600);
-                landxCoords[i] = landx;
-            }
+                landy = rand.nextInt(260);
 
-            landyCoords[0] = -150;
-            landyCoords[1] = -100;
-            landyCoords[2] = -50;
-            landyCoords[3] = 0;
-            landyCoords[4] = 50;
-            landyCoords[5] = 100;
-            landyCoords[6] = 150;
-            landyCoords[7] = 175;
-            landyCoords[8] = 200;
-            landyCoords[9] = 250;
+                landxCoords[i] = landx;
+                landyCoords[i] = landy;
+            }
 
             frameController++;
             g.drawImage(dogIdle[idleSpriteNo], 320, 240, null);
@@ -176,10 +165,9 @@ public class Main extends JPanel implements KeyListener, Runnable {
                 dogOriginalyPos += 1; // for jumping back on platform
                 catOriginalyPos += 1;
 
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 8; i++) {
                     landyCoords[i] += 1;
                 }
-
             } else
                 bgyPos = -245;
 
@@ -191,7 +179,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
                 frameController = 0;
             }
 
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 8; i++) {
                 if (landyCoords[i] > 360) { // generate new blocks if old one disappears
                     landx = rand.nextInt(600);
 
@@ -207,71 +195,50 @@ public class Main extends JPanel implements KeyListener, Runnable {
                 if (dogJumping || rightPressed || leftPressed) {
                     if (rightPressed) {
                         dogLookLeft = false;
-                        dogxPos += 10;
+                        dogxPos += 8;
 
-                        // fall off platform
-                        if (dogOnPlatform && !dogJumping) {
-                            if (dogxPos > landxCoords[dogPlatformIndex] + 60) {
-                                dogJumping = true;
-
-                                dogVelocity = 0;
-                                dogGravity = 3;
-
-                                dogOriginalyPos = 500;
-                            }
-                        }
+                        // if (platformIndex > -1 && !dogJumping) {
+                        // if (dogxPos < landxCoords[platformIndex] | dogxPos >
+                        // landxCoords[platformIndex] + 100) {
+                        // dogyPos += dogFallVelocity;
+                        // dogFallVelocity += dogFallGravity;
+                        // }
+                        // }
 
                     }
-
                     if (leftPressed) {
-                        dogxPos -= 10;
+                        dogxPos -= 8;
                         dogLookLeft = true;
-
-                        // IF DOG WLAKS OFF PLATFORM
-                        if (dogOnPlatform && !dogJumping) {
-                            if (dogxPos <= landxCoords[dogPlatformIndex] - 30) {
-                                dogJumping = true;
-
-                                dogVelocity = 0;
-                                dogGravity = 3;
-
-                                dogOriginalyPos = 500;
-                            }
-                        }
                     }
 
-                    if (dogLookLeft) {
+                    if (dogLookLeft == true) {
                         if (dogJumping) {
                             g.drawImage(dogIdlel[idleSpriteNo], dogxPos, dogyPos, null);
                             dogyPos += dogVelocity;
                             dogVelocity += dogGravity;
 
-                            if (dogOnPlatform) {
-                                dogOriginalyPos = 500;
-                                dogJumping = true;
-                            }
+                            // do collision here
+                            // if the dog is coming down (dogVelocity>0) and the dogyPos+70 is greater than
+                            // the
+                            // ypos of a platform, then you position the dog on the platform and set
+                            // dogJumping to false
 
-                            // COLLISION (it works! :))
                             if (dogVelocity >= 0) { // if jumping down
-
-                                for (int i = 0; i < 10; i++) {
-                                    if (dogxPos >= landxCoords[i] - 30 && dogxPos <= landxCoords[i] + 60) {
-
+                                for (int i = 0; i < landyCoords.length; i++) {
+                                    if (dogxPos >= landxCoords[i] - 30 && dogxPos <= landxCoords[i] + 50) {
                                         if (dogyPos + 70 > landyCoords[i] && dogyPos < landyCoords[i] &&
-                                                Math.abs(dogyPos + 70 - landyCoords[i]) < 30) {
+                                                Math.abs(dogyPos + 70 - landyCoords[i]) < 8) {
                                             dogOriginalyPos = landyCoords[i] - 70;
                                             dogJumping = false;
 
-                                            dogPlatformIndex = i;
-                                            dogOnPlatform = true;
-
+                                            platformIndex = i;
                                         }
                                     }
                                 }
+                            } // known bug: when the bottom platform is disappearing and another one is
+                              // spawned on top, the dog gets transfered to the one above
 
-                            }
-
-                            if (dogyPos > dogOriginalyPos) { // for landing
+                            if (dogyPos > dogOriginalyPos) {
                                 dogJumping = false;
                                 dogyPos = dogOriginalyPos; // depends on y value of platform dog stands on
 
@@ -288,28 +255,21 @@ public class Main extends JPanel implements KeyListener, Runnable {
                             dogyPos += dogVelocity;
                             dogVelocity += dogGravity;
 
-                            if (dogOnPlatform) {
-                                dogOriginalyPos = 500;
-                                dogJumping = true;
-                            }
-
-                            // COLLISION (it works! :))
+                            // COLLISION
                             if (dogVelocity >= 0) { // if jumping down
-                                for (int i = 0; i < 10; i++) {
-                                    if (dogxPos >= landxCoords[i] - 30 && dogxPos <= landxCoords[i] + 60) {
+                                for (int i = 0; i < landyCoords.length; i++) {
+                                    if (dogxPos >= landxCoords[i] - 30 && dogxPos <= landxCoords[i] + 90) {
                                         if (dogyPos + 70 > landyCoords[i] && dogyPos < landyCoords[i] &&
-                                                Math.abs(dogyPos + 70 - landyCoords[i]) < 30) {
+                                                Math.abs(dogyPos + 70 - landyCoords[i]) < 8) {
                                             dogOriginalyPos = landyCoords[i] - 70;
-
                                             dogJumping = false;
 
-                                            dogPlatformIndex = i;
-                                            dogOnPlatform = true;
-
+                                            platformIndex = i;
                                         }
                                     }
                                 }
                             }
+
                             if (dogyPos > dogOriginalyPos) {
                                 dogJumping = false;
                                 dogyPos = dogOriginalyPos; // depends on y value of platform dog stands on
@@ -327,15 +287,29 @@ public class Main extends JPanel implements KeyListener, Runnable {
 
                 // if nothing is pressed
                 else {
-                    if (dogLookLeft)
+                    if (dogLookLeft == true)
                         g.drawImage(dogIdlel[idleSpriteNo], dogxPos, dogyPos, null);
-                    else if (!dogLookLeft)
+                    else if (dogLookLeft == false)
                         g.drawImage(dogIdle[idleSpriteNo], dogxPos, dogyPos, null);
                 }
 
                 if (dogyPos >= 360 - 38) {
+
+                    // *********** VARIABLE RESET HERE IS NOT NEEDED ANYMORE
+                    // VARIABLE RESET
+                    dogxPos = 320;
+                    dogyPos = catyPos = 240;
+                    catxPos = 360;
+                    bgyPos = -700;
+                    bgMoveUpFactor = 0.00000000001;
+
+                    rightPressed = leftPressed = dogJumping = wPressed = aPressed = dPressed = catJumping = false;
+                    dogGravity = catVelocity = 3;
+                    dogVelocity = catVelocity = -27;
+
                     state = 6;
                 }
+                // put other floating islands/blocks here
             }
 
             // two players
@@ -344,35 +318,11 @@ public class Main extends JPanel implements KeyListener, Runnable {
                 if (dogJumping || rightPressed || leftPressed) {
                     if (rightPressed) {
                         dogLookLeft = false;
-                        dogxPos += 10;
-
-                        // fall off platform
-                        if (dogOnPlatform && !dogJumping) {
-                            if (dogxPos > landxCoords[dogPlatformIndex] + 60) {
-                                dogJumping = true;
-
-                                dogVelocity = 0;
-                                dogGravity = 3;
-
-                                dogOriginalyPos = 500;
-                            }
-                        }
+                        dogxPos += 8;
                     }
                     if (leftPressed) {
-                        dogxPos -= 10;
+                        dogxPos -= 8;
                         dogLookLeft = true;
-
-                        // IF DOG WLAKS OFF PLATFORM
-                        if (dogOnPlatform && !dogJumping) {
-                            if (dogxPos <= landxCoords[dogPlatformIndex] - 30) {
-                                dogJumping = true;
-
-                                dogVelocity = 0;
-                                dogGravity = 3;
-
-                                dogOriginalyPos = 500;
-                            }
-                        }
                     }
 
                     if (dogLookLeft == true) {
@@ -380,32 +330,6 @@ public class Main extends JPanel implements KeyListener, Runnable {
                             g.drawImage(dogIdlel[idleSpriteNo], dogxPos, dogyPos, null);
                             dogyPos += dogVelocity;
                             dogVelocity += dogGravity;
-
-                            if (dogOnPlatform) {
-                                dogOriginalyPos = 500;
-                                dogJumping = true;
-                            }
-
-                            // COLLISION (it works! :))
-                            if (dogVelocity >= 0) { // if jumping down
-
-                                for (int i = 0; i < 10; i++) {
-                                    if (dogxPos >= landxCoords[i] - 30 && dogxPos <= landxCoords[i] + 60) {
-
-                                        if (dogyPos + 70 > landyCoords[i] && dogyPos < landyCoords[i] &&
-                                                Math.abs(dogyPos + 70 - landyCoords[i]) < 30) {
-                                            dogOriginalyPos = landyCoords[i] - 70;
-                                            dogJumping = false;
-
-                                            dogPlatformIndex = i;
-                                            dogOnPlatform = true;
-
-                                        }
-                                    }
-                                }
-
-                            }
-
                             if (dogyPos > dogOriginalyPos) {
                                 dogJumping = false;
                                 dogyPos = dogOriginalyPos; // depends on y value of platform dog stands on
@@ -421,30 +345,6 @@ public class Main extends JPanel implements KeyListener, Runnable {
                             g.drawImage(dogIdle[idleSpriteNo], dogxPos, dogyPos, null);
                             dogyPos += dogVelocity;
                             dogVelocity += dogGravity;
-
-                            if (dogOnPlatform) {
-                                dogOriginalyPos = 500;
-                                dogJumping = true;
-                            }
-
-                            // COLLISION (it works! :))
-                            if (dogVelocity >= 0) { // if jumping down
-                                for (int i = 0; i < 10; i++) {
-                                    if (dogxPos >= landxCoords[i] - 30 && dogxPos <= landxCoords[i] + 60) {
-                                        if (dogyPos + 70 > landyCoords[i] && dogyPos < landyCoords[i] &&
-                                                Math.abs(dogyPos + 70 - landyCoords[i]) < 30) {
-                                            dogOriginalyPos = landyCoords[i] - 70;
-
-                                            dogJumping = false;
-
-                                            dogPlatformIndex = i;
-                                            dogOnPlatform = true;
-
-                                        }
-                                    }
-                                }
-                            }
-
                             if (dogyPos > dogOriginalyPos) {
                                 dogJumping = false;
                                 dogyPos = dogOriginalyPos; // depends on y value of platform dog stands on
@@ -467,35 +367,11 @@ public class Main extends JPanel implements KeyListener, Runnable {
                 if (catJumping || dPressed || aPressed) {
                     if (dPressed) {
                         catLookLeft = false;
-                        catxPos += 10;
-
-                        // fall off platform
-                        if (catOnPlatform && !catJumping) {
-                            if (catxPos > landxCoords[catPlatformIndex] + 60) {
-                                catJumping = true;
-
-                                catVelocity = 0;
-                                catGravity = 3;
-
-                                catOriginalyPos = 500;
-                            }
-                        }
+                        catxPos += 8;
                     }
                     if (aPressed) {
                         catLookLeft = true;
-                        catxPos -= 10;
-
-                        // IF DOG WLAKS OFF PLATFORM
-                        if (catOnPlatform && !catJumping) {
-                            if (catxPos <= landxCoords[catPlatformIndex] - 30) {
-                                catJumping = true;
-
-                                catVelocity = 0;
-                                catGravity = 3;
-
-                                catOriginalyPos = 500;
-                            }
-                        }
+                        catxPos -= 8;
                     }
 
                     if (catLookLeft) {
@@ -503,32 +379,6 @@ public class Main extends JPanel implements KeyListener, Runnable {
                             g.drawImage(catIdlel[idleSpriteNo], catxPos, catyPos, null);
                             catyPos += catVelocity;
                             catVelocity += catGravity;
-
-                            if (catOnPlatform) {
-                                catOriginalyPos = 500;
-                                catJumping = true;
-                            }
-
-                            // COLLISION (it works! :))
-                            if (catVelocity >= 0) { // if jumping down
-
-                                for (int i = 0; i < 10; i++) {
-                                    if (catxPos >= landxCoords[i] - 30 && catxPos <= landxCoords[i] + 60) {
-
-                                        if (catyPos + 70 > landyCoords[i] && catyPos < landyCoords[i] &&
-                                                Math.abs(dogyPos + 70 - landyCoords[i]) < 30) {
-                                            catOriginalyPos = landyCoords[i] - 70;
-                                            catJumping = false;
-
-                                            catPlatformIndex = i;
-                                            catOnPlatform = true;
-
-                                        }
-                                    }
-                                }
-
-                            }
-
                             if (catyPos > catOriginalyPos) {
                                 catJumping = false;
                                 catyPos = catOriginalyPos; // depends on y value of platform cat stands on
@@ -536,7 +386,6 @@ public class Main extends JPanel implements KeyListener, Runnable {
                                 catVelocity = -27;
                                 catGravity = 3;
                             }
-
                         } else {
                             g.drawImage(catRunl[runSpriteNo], catxPos, catyPos, null);
                         }
@@ -545,28 +394,6 @@ public class Main extends JPanel implements KeyListener, Runnable {
                             g.drawImage(catIdle[idleSpriteNo], catxPos, catyPos, null);
                             catyPos += catVelocity;
                             catVelocity += catGravity;
-
-                            if (catOnPlatform) {
-                                catOriginalyPos = 500;
-                                catJumping = true;
-                            }
-
-                            // COLLISION (it works! :))
-                            if (catVelocity >= 0) { // if jumping down
-                                for (int i = 0; i < 10; i++) {
-                                    if (catxPos >= landxCoords[i] - 30 && catxPos <= landxCoords[i] + 60) {
-                                        if (catyPos + 70 > landyCoords[i] && catyPos < landyCoords[i]
-                                                && Math.abs(catyPos + 70 - landyCoords[i]) < 30) {
-                                            catOriginalyPos = landyCoords[i] - 70;
-                                            catJumping = false;
-
-                                            catPlatformIndex = i;
-                                            catOnPlatform = true;
-                                        }
-                                    }
-                                }
-                            }
-
                             if (catyPos > catOriginalyPos) {
                                 catJumping = false;
                                 catyPos = catOriginalyPos; // depends on y value of platform cat stands on
@@ -578,7 +405,6 @@ public class Main extends JPanel implements KeyListener, Runnable {
                             g.drawImage(catRun[runSpriteNo], catxPos, catyPos, null);
                         }
                     }
-
                 } else {
                     if (catLookLeft)
                         g.drawImage(catIdlel[idleSpriteNo], catxPos, catyPos, null);
@@ -587,8 +413,23 @@ public class Main extends JPanel implements KeyListener, Runnable {
                 }
 
                 if (dogyPos >= 360 - 38 || catyPos >= 360 - 38) {
+
+                    // *********** VARIABLE RESET HERE IS NOT NEEDED ANYMORE
+                    // VARIABLE RESET
+                    dogxPos = 320;
+                    dogyPos = catyPos = 240;
+                    catxPos = 360;
+                    bgyPos = -700;
+                    bgMoveUpFactor = 0.00000000001;
+
+                    rightPressed = leftPressed = dogJumping = wPressed = aPressed = dPressed = catJumping = false;
+                    dogGravity = catVelocity = 3;
+                    dogVelocity = catVelocity = -27;
+
                     state = 6;
                 }
+
+                // put other floating islands/blocks here
             }
         }
 
@@ -604,21 +445,13 @@ public class Main extends JPanel implements KeyListener, Runnable {
             dogGravity = catVelocity = 3;
             dogVelocity = catVelocity = -27;
 
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 8; i++) {
                 landx = rand.nextInt(600);
-                landxCoords[i] = landx;
-            }
+                landy = rand.nextInt(260);
 
-            landyCoords[0] = -150;
-            landyCoords[1] = -100;
-            landyCoords[2] = -50;
-            landyCoords[3] = 0;
-            landyCoords[4] = 50;
-            landyCoords[5] = 100;
-            landyCoords[6] = 150;
-            landyCoords[7] = 175;
-            landyCoords[8] = 200;
-            landyCoords[9] = 250;
+                landxCoords[i] = landx;
+                landyCoords[i] = landy;
+            }
         }
     }
 
@@ -778,21 +611,13 @@ public class Main extends JPanel implements KeyListener, Runnable {
                 dogGravity = catVelocity = 3;
                 dogVelocity = catVelocity = -27;
 
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 8; i++) {
                     landx = rand.nextInt(600);
-                    landxCoords[i] = landx;
-                }
+                    landy = rand.nextInt(260);
 
-                landyCoords[0] = -150;
-                landyCoords[1] = -100;
-                landyCoords[2] = -50;
-                landyCoords[3] = 0;
-                landyCoords[4] = 50;
-                landyCoords[5] = 100;
-                landyCoords[6] = 150;
-                landyCoords[7] = 175;
-                landyCoords[8] = 200;
-                landyCoords[9] = 250;
+                    landxCoords[i] = landx;
+                    landyCoords[i] = landy;
+                }
 
                 state = 4;
             }
@@ -915,13 +740,13 @@ public class Main extends JPanel implements KeyListener, Runnable {
         }
 
         // platform(s) generation (initial)
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 8; i++) {
             landx = rand.nextInt(600);
             landxCoords[i] = landx;
         }
 
         JFrame frame = new JFrame("Flood Escape");
-        Main panel = new Main();
+        old panel = new old();
         frame.add(panel);
         frame.setVisible(true);
         frame.pack();
