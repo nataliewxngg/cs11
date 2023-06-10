@@ -128,6 +128,16 @@ public class Main extends JPanel implements KeyListener, Runnable {
             dogGravity = catVelocity = 3;
             dogVelocity = catVelocity = -27;
 
+            for (int i = 0; i < 8; i++) {
+                landx = rand.nextInt(600);
+                landy = rand.nextInt(260);
+
+                landxCoords[i] = landx;
+                landyCoords[i] = landy;
+
+                numOfPlatforms += 1;
+            }
+
             frameController++;
             g.drawImage(dogIdle[idleSpriteNo], 320, 240, null);
 
@@ -198,6 +208,13 @@ public class Main extends JPanel implements KeyListener, Runnable {
                             g.drawImage(dogIdlel[idleSpriteNo], dogxPos, dogyPos, null);
                             dogyPos += dogVelocity;
                             dogVelocity += dogGravity;
+
+                            // do collision here
+                            // if the dog is coming down (dogVelocity>0) and the dogyPos+70 is greater than
+                            // the
+                            // ypos of a platform, then you position the dog on the platform and set
+                            // dogJumping to false
+
                             if (dogyPos > dogOriginalyPos) {
                                 dogJumping = false;
                                 dogyPos = dogOriginalyPos; // depends on y value of platform dog stands on
@@ -205,6 +222,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
                                 dogVelocity = -27;
                                 dogGravity = 3;
                             }
+
                         } else {
                             g.drawImage(dogRunl[runSpriteNo], dogxPos, dogyPos, null);
                         }
@@ -342,23 +360,22 @@ public class Main extends JPanel implements KeyListener, Runnable {
                 // put other floating islands/blocks here
             }
 
-            // if (dogyPos >= 360 - 38 || catyPos >= 360 - 38) {
+            if (dogyPos >= 360 - 38 || catyPos >= 360 - 38) {
 
-            // *********** VARIABLE RESET HERE IS NOT NEEDED ANYMORE
-            // // VARIABLE RESET
-            // dogxPos = 320;
-            // dogyPos = catyPos = 240;
-            // catxPos = 360;
-            // bgyPos = -700;
-            // bgMoveUpFactor = 0.00000000001;
+                // *********** VARIABLE RESET HERE IS NOT NEEDED ANYMORE
+                // VARIABLE RESET
+                dogxPos = 320;
+                dogyPos = catyPos = 240;
+                catxPos = 360;
+                bgyPos = -700;
+                bgMoveUpFactor = 0.00000000001;
 
-            // rightPressed = leftPressed = dogJumping = wPressed = aPressed = dPressed =
-            // catJumping = false;
-            // dogGravity = catVelocity = 3;
-            // dogVelocity = catVelocity = -27;
+                rightPressed = leftPressed = dogJumping = wPressed = aPressed = dPressed = catJumping = false;
+                dogGravity = catVelocity = 3;
+                dogVelocity = catVelocity = -27;
 
-            // state = 6;
-            // }
+                state = 6;
+            }
         }
 
         if (state == 6) {
@@ -375,7 +392,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
 
             for (int i = 0; i < 8; i++) {
                 landx = rand.nextInt(600);
-                landy = rand.nextInt(340);
+                landy = rand.nextInt(260);
 
                 landxCoords[i] = landx;
                 landyCoords[i] = landy;
@@ -543,7 +560,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
 
                 for (int i = 0; i < 8; i++) {
                     landx = rand.nextInt(600);
-                    landy = rand.nextInt(340);
+                    landy = rand.nextInt(260);
 
                     landxCoords[i] = landx;
                     landyCoords[i] = landy;
@@ -674,7 +691,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
         // platform(s) generation (initial)
         for (int i = 0; i < 8; i++) {
             landx = rand.nextInt(600);
-            landy = rand.nextInt(340);
+            landy = rand.nextInt(260);
 
             landxCoords[i] = landx;
             landyCoords[i] = landy;
