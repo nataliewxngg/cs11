@@ -1,5 +1,8 @@
 package culminating;
 
+// RULES: USED WAD OR ARROW KEYS TO NAVIGATE UPWARDS IN THE INFINITE VERTICAL PLATFORMER
+// ***** YOU CANNOT LAND BACK ON THE SAME PLATFORM AFTER JUMPING! 
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -130,7 +133,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
             bgyPos = -700;
             bgMoveUpFactor = 0.00000000001;
 
-            rightPressed = leftPressed = dogJumping = wPressed = aPressed = dPressed = catJumping = twoPlayers = false;
+            rightPressed = leftPressed = dogJumping = wPressed = aPressed = dPressed = catJumping = twoPlayers = dogOnPlatform = catOnPlatform = false;
             dogGravity = catVelocity = 3;
             dogVelocity = catVelocity = -27;
 
@@ -169,7 +172,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
 
             if (bgyPos < 0) { // used to accumulate y pos of land and bg
                 bgyPos += bgMoveUpFactor;
-                bgMoveUpFactor += 0.00001;
+                bgMoveUpFactor += 0.005;
                 dogyPos += 1;
                 catyPos += 1;
 
@@ -358,6 +361,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
                             }
                         }
                     }
+
                     if (leftPressed) {
                         dogxPos -= 10;
                         dogLookLeft = true;
@@ -516,7 +520,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
                                     if (catxPos >= landxCoords[i] - 30 && catxPos <= landxCoords[i] + 60) {
 
                                         if (catyPos + 70 > landyCoords[i] && catyPos < landyCoords[i] &&
-                                                Math.abs(dogyPos + 70 - landyCoords[i]) < 30) {
+                                                Math.abs(catyPos + 70 - landyCoords[i]) < 30) {
                                             catOriginalyPos = landyCoords[i] - 70;
                                             catJumping = false;
 
@@ -600,7 +604,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
             bgyPos = -700;
             bgMoveUpFactor = 0.00000000001;
 
-            rightPressed = leftPressed = dogJumping = wPressed = aPressed = dPressed = catJumping = false;
+            rightPressed = leftPressed = dogJumping = wPressed = aPressed = dPressed = catJumping = dogOnPlatform = catOnPlatform = false;
             dogGravity = catVelocity = 3;
             dogVelocity = catVelocity = -27;
 
@@ -774,7 +778,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
                 bgyPos = -700;
                 bgMoveUpFactor = 0.00000000001;
 
-                rightPressed = leftPressed = dogJumping = wPressed = aPressed = dPressed = catJumping = false;
+                rightPressed = leftPressed = dogJumping = wPressed = aPressed = dPressed = catJumping = dogOnPlatform = catOnPlatform = false;
                 dogGravity = catVelocity = 3;
                 dogVelocity = catVelocity = -27;
 
