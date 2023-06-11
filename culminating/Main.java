@@ -12,6 +12,7 @@ import java.io.*;
 import javax.imageio.ImageIO;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class Main extends JPanel implements KeyListener, Runnable {
 
@@ -31,7 +32,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
     public static int timer = 0;
 
     public static int bgyPos = -700;
-    public static int bgMoveUpFactor = 1;
+    public static int moveUpFactor = 1;
 
     public static int landx;
     public static int landy;
@@ -47,13 +48,15 @@ public class Main extends JPanel implements KeyListener, Runnable {
     // Character Positions
     public static int dogxPos = 320;
     public static int dogyPos = 240;
+    public static int dogyPosOld = 240;
+
+    public static int catxPos = 360;
+    public static int catyPos = 240;
+    public static int catyPosOld = 240;
 
     // used for jumping (initial value doesn't matter)
     public static int dogOriginalyPos = 240;
     public static int catOriginalyPos = 240;
-
-    public static int catxPos = 360;
-    public static int catyPos = 240;
 
     // arrow positions
     public static int menuArrowxPos = 255;
@@ -90,6 +93,9 @@ public class Main extends JPanel implements KeyListener, Runnable {
     public static int catFallGravity = 3;
     public static int catFallVelocity = 0;
 
+    // score
+    public static int score = 0;
+
     // Buffered Images
     public static BufferedImage[] stateImages = new BufferedImage[7];
 
@@ -125,23 +131,31 @@ public class Main extends JPanel implements KeyListener, Runnable {
         super.paintComponent(g); // Clears the screen
         g.drawImage(stateImages[state], 0, 0, null);
 
+        Font font = new Font("Press Start 2P", Font.PLAIN, 30);
+        g.setFont(font);
+        g.setColor(Color.WHITE);
+
         if (state == 0 || state == 3) {
 
             // VARIABLE RESET (for pause -> menu -> game)
             dogxPos = 320;
-            dogyPos = catyPos = 240;
+            dogyPos = catyPos = dogyPosOld = catyPosOld = 240;
             catxPos = 360;
             bgyPos = -700;
-            bgMoveUpFactor = 2;
+            moveUpFactor = 2;
 
             rightPressed = leftPressed = dogJumping = wPressed = aPressed = dPressed = catJumping = twoPlayers = dogOnPlatform = catOnPlatform = false;
             dogGravity = catVelocity = 3;
             dogVelocity = catVelocity = -27;
 
             for (int i = 0; i < 10; i++) {
-                landx = rand.nextInt(600);
+                if (i % 2 == 0)
+                    landx = rand.nextInt(300, 600);
+                else if (i % 2 != 0)
+                    landx = rand.nextInt(0, 300);
                 landxCoords[i] = landx;
             }
+            score = 0;
 
             landyCoords[0] = -150;
             landyCoords[1] = -100;
@@ -169,45 +183,48 @@ public class Main extends JPanel implements KeyListener, Runnable {
 
         if (state == 4) {
 
+            dogyPosOld = dogyPos;
+            catyPosOld = catyPos;
+
             g.drawImage(stateImages[state], 0, bgyPos, null); // sky
 
             if (bgyPos < 0) { // used to accumulate y pos of land and bg
-                System.out.println(bgyPos);
+                // System.out.println(bgyPos);
                 // bgyPos += bgMoveUpFactor;
                 // bgMoveUpFactor += 0.005;
-                bgyPos += bgMoveUpFactor;
+                bgyPos += moveUpFactor;
 
-                dogyPos += bgMoveUpFactor;
-                catyPos += bgMoveUpFactor;
+                dogyPos += moveUpFactor;
+                catyPos += moveUpFactor;
 
                 for (int i = 0; i < 10; i++) {
-                    landyCoords[i] += bgMoveUpFactor;
+                    landyCoords[i] += moveUpFactor;
                 }
 
-                dogOriginalyPos += bgMoveUpFactor; // for jumping back on platform
-                catOriginalyPos += bgMoveUpFactor;
+                dogOriginalyPos += moveUpFactor; // for jumping back on platform
+                catOriginalyPos += moveUpFactor;
 
                 while (dogyPos + 30 < 0) {
                     // bgyPos += bgMoveUpFactor;
                     // bgMoveUpFactor += 0.005;
-                    bgyPos += bgMoveUpFactor;
+                    bgyPos += moveUpFactor;
 
-                    dogyPos += bgMoveUpFactor;
-                    catyPos += bgMoveUpFactor;
+                    dogyPos += moveUpFactor;
+                    catyPos += moveUpFactor;
 
                     for (int i = 0; i < 10; i++) {
-                        landyCoords[i] += bgMoveUpFactor;
+                        landyCoords[i] += moveUpFactor;
                     }
 
-                    dogOriginalyPos += bgMoveUpFactor; // for jumping back on platform
-                    catOriginalyPos += bgMoveUpFactor;
+                    dogOriginalyPos += moveUpFactor; // for jumping back on platform
+                    catOriginalyPos += moveUpFactor;
                 }
 
             } else {
                 bgyPos = -245;
                 timer += 1;
                 if (timer % 5 == 0)
-                    bgMoveUpFactor += 1;
+                    moveUpFactor += 1;
             }
 
             frameController++;
@@ -220,7 +237,10 @@ public class Main extends JPanel implements KeyListener, Runnable {
 
             for (int i = 0; i < 10; i++) {
                 if (landyCoords[i] > 360) { // generate new blocks if old one disappears
-                    landx = rand.nextInt(600);
+                    if (i % 2 == 0)
+                        landx = rand.nextInt(300, 600);
+                    else if (i % 2 != 0)
+                        landx = rand.nextInt(0, 300);
 
                     landxCoords[i] = landx;
                     landyCoords[i] = -10;
@@ -228,6 +248,8 @@ public class Main extends JPanel implements KeyListener, Runnable {
 
                 g.drawImage(land, landxCoords[i], landyCoords[i], null); // print platforms
             }
+
+            g.drawString(Integer.toString(score), 20, 50);
 
             if (!twoPlayers) {
                 // for movement
@@ -309,6 +331,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
                         } else {
                             g.drawImage(dogRunl[runSpriteNo], dogxPos, dogyPos, null);
                         }
+
                     } else if (!dogLookLeft) {
                         if (dogJumping) {
                             g.drawImage(dogIdle[idleSpriteNo], dogxPos, dogyPos, null);
@@ -360,9 +383,15 @@ public class Main extends JPanel implements KeyListener, Runnable {
                         g.drawImage(dogIdle[idleSpriteNo], dogxPos, dogyPos, null);
                 }
 
+                if (dogyPos < dogyPosOld) {
+                    score += dogyPosOld - dogyPos;
+                    System.out.println(score);
+                }
+
                 if (dogyPos >= 360 - 38) {
                     state = 6;
                 }
+
             }
 
             // two players
@@ -614,6 +643,14 @@ public class Main extends JPanel implements KeyListener, Runnable {
                         g.drawImage(catIdle[idleSpriteNo], catxPos, catyPos, null);
                 }
 
+                if (dogyPos < dogyPosOld && dogyPos > catyPos) {
+                    score += dogyPosOld - dogyPos;
+                    System.out.println(score);
+                } else if (catyPos < catyPosOld && catyPos > dogyPos) {
+                    score += catyPosOld - catyPos;
+                    System.out.println(score);
+                }
+
                 if (dogyPos >= 360 - 38 || catyPos >= 360 - 38) {
                     state = 6;
                 }
@@ -625,17 +662,21 @@ public class Main extends JPanel implements KeyListener, Runnable {
         {
             // VARIABLE RESET
             dogxPos = 320;
-            dogyPos = catyPos = 240;
+            dogyPos = catyPos = dogyPosOld = catyPosOld = 240;
             catxPos = 360;
             bgyPos = -700;
-            bgMoveUpFactor = 2;
+            moveUpFactor = 2;
 
             rightPressed = leftPressed = dogJumping = wPressed = aPressed = dPressed = catJumping = dogOnPlatform = catOnPlatform = false;
             dogGravity = catVelocity = 3;
             dogVelocity = catVelocity = -27;
+            score = 0;
 
             for (int i = 0; i < 10; i++) {
-                landx = rand.nextInt(600);
+                if (i % 2 == 0)
+                    landx = rand.nextInt(300, 600);
+                else if (i % 2 != 0)
+                    landx = rand.nextInt(0, 300);
                 landxCoords[i] = landx;
             }
 
@@ -799,17 +840,21 @@ public class Main extends JPanel implements KeyListener, Runnable {
             if (e.getKeyChar() == 'r') {
                 // VARIABLE RESET
                 dogxPos = 320;
-                dogyPos = catyPos = 240;
+                dogyPos = catyPos = dogyPosOld = catyPosOld = 240;
                 catxPos = 360;
                 bgyPos = -700;
-                bgMoveUpFactor = 2;
+                moveUpFactor = 2;
 
                 rightPressed = leftPressed = dogJumping = wPressed = aPressed = dPressed = catJumping = dogOnPlatform = catOnPlatform = false;
                 dogGravity = catVelocity = 3;
                 dogVelocity = catVelocity = -27;
+                score = 0;
 
                 for (int i = 0; i < 10; i++) {
-                    landx = rand.nextInt(600);
+                    if (i % 2 == 0)
+                        landx = rand.nextInt(300, 600);
+                    else if (i % 2 != 0)
+                        landx = rand.nextInt(0, 300);
                     landxCoords[i] = landx;
                 }
 
@@ -878,6 +923,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
     }
 
     public static void main(String[] args) {
+
         try {
             stateImages[0] = ImageIO.read(new File("culminating/assets/0menu.png"));
             stateImages[1] = ImageIO.read(new File("culminating/assets/1credits.png"));
@@ -944,9 +990,20 @@ public class Main extends JPanel implements KeyListener, Runnable {
             System.out.println("Something wrong with the image!");
         }
 
+        try {
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(
+                    Font.createFont(Font.TRUETYPE_FONT, new File("culminating/assets/PressStart2P-Regular.ttf")));
+        } catch (IOException | FontFormatException e) {
+            System.out.println("Something wrong with the font!");
+        }
+
         // platform(s) generation (initial)
         for (int i = 0; i < 10; i++) {
-            landx = rand.nextInt(600);
+            if (i % 2 == 0)
+                landx = rand.nextInt(300, 600);
+            else if (i % 2 != 0)
+                landx = rand.nextInt(0, 300);
             landxCoords[i] = landx;
         }
 
