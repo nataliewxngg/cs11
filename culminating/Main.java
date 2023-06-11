@@ -28,9 +28,10 @@ public class Main extends JPanel implements KeyListener, Runnable {
     public static int idleSpriteNo = 0;
     public static int runSpriteNo = 0;
     public static int frameController = 0;
+    public static int timer = 0;
 
     public static int bgyPos = -700;
-    public static double bgMoveUpFactor = 0.00000000001;
+    public static int bgMoveUpFactor = 1;
 
     public static int landx;
     public static int landy;
@@ -131,7 +132,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
             dogyPos = catyPos = 240;
             catxPos = 360;
             bgyPos = -700;
-            bgMoveUpFactor = 0.00000000001;
+            bgMoveUpFactor = 2;
 
             rightPressed = leftPressed = dogJumping = wPressed = aPressed = dPressed = catJumping = twoPlayers = dogOnPlatform = catOnPlatform = false;
             dogGravity = catVelocity = 3;
@@ -171,20 +172,43 @@ public class Main extends JPanel implements KeyListener, Runnable {
             g.drawImage(stateImages[state], 0, bgyPos, null); // sky
 
             if (bgyPos < 0) { // used to accumulate y pos of land and bg
+                System.out.println(bgyPos);
+                // bgyPos += bgMoveUpFactor;
+                // bgMoveUpFactor += 0.005;
                 bgyPos += bgMoveUpFactor;
-                bgMoveUpFactor += 0.005;
-                dogyPos += 1;
-                catyPos += 1;
 
-                dogOriginalyPos += 1; // for jumping back on platform
-                catOriginalyPos += 1;
+                dogyPos += bgMoveUpFactor;
+                catyPos += bgMoveUpFactor;
 
                 for (int i = 0; i < 10; i++) {
-                    landyCoords[i] += 1;
+                    landyCoords[i] += bgMoveUpFactor;
                 }
 
-            } else
+                dogOriginalyPos += bgMoveUpFactor; // for jumping back on platform
+                catOriginalyPos += bgMoveUpFactor;
+
+                while (dogyPos + 30 < 0) {
+                    // bgyPos += bgMoveUpFactor;
+                    // bgMoveUpFactor += 0.005;
+                    bgyPos += bgMoveUpFactor;
+
+                    dogyPos += bgMoveUpFactor;
+                    catyPos += bgMoveUpFactor;
+
+                    for (int i = 0; i < 10; i++) {
+                        landyCoords[i] += bgMoveUpFactor;
+                    }
+
+                    dogOriginalyPos += bgMoveUpFactor; // for jumping back on platform
+                    catOriginalyPos += bgMoveUpFactor;
+                }
+
+            } else {
                 bgyPos = -245;
+                timer += 1;
+                if (timer % 5 == 0)
+                    bgMoveUpFactor += 1;
+            }
 
             frameController++;
 
@@ -596,13 +620,15 @@ public class Main extends JPanel implements KeyListener, Runnable {
             }
         }
 
-        if (state == 6) {
+        if (state == 6)
+
+        {
             // VARIABLE RESET
             dogxPos = 320;
             dogyPos = catyPos = 240;
             catxPos = 360;
             bgyPos = -700;
-            bgMoveUpFactor = 0.00000000001;
+            bgMoveUpFactor = 2;
 
             rightPressed = leftPressed = dogJumping = wPressed = aPressed = dPressed = catJumping = dogOnPlatform = catOnPlatform = false;
             dogGravity = catVelocity = 3;
@@ -776,7 +802,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
                 dogyPos = catyPos = 240;
                 catxPos = 360;
                 bgyPos = -700;
-                bgMoveUpFactor = 0.00000000001;
+                bgMoveUpFactor = 2;
 
                 rightPressed = leftPressed = dogJumping = wPressed = aPressed = dPressed = catJumping = dogOnPlatform = catOnPlatform = false;
                 dogGravity = catVelocity = 3;
