@@ -1014,6 +1014,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
         frame.pack();
     }
 
+    // 50 FPS
     public void run() {
         while (true) {
             repaint();
