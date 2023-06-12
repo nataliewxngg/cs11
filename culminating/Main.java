@@ -806,7 +806,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
             if (e.getKeyChar() == 'p') {
                 state = 5; // pause
             } else if (e.getKeyChar() == 'g') {
-                state = 6; // game over
+                // state = 6; // game over
                 // only for transitions
             }
 
