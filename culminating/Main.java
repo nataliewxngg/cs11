@@ -113,6 +113,36 @@ public class Main extends JPanel implements KeyListener, Runnable {
 
     public static BufferedImage arrow;
 
+    public static int getHighScore() throws IOException {
+
+        Scanner inputFile = new Scanner(new File("scores.txt"));
+        int highscore;
+
+        highscore = Integer.parseInt(inputFile.next());
+        inputFile.close();
+
+        return highscore;
+
+    }
+
+    public static int getNewHighScore(int score) throws IOException {
+        Scanner inputFile = new Scanner(new File("scores.txt"));
+        PrintWriter outputFile;
+        int highscore;
+
+        highscore = Integer.parseInt(inputFile.next());
+        inputFile.close();
+
+        if (score > highscore) {
+            highscore = score;
+            outputFile = new PrintWriter(new FileWriter("scores.txt"));
+            outputFile.print(highscore);
+            outputFile.close();
+        }
+        return highscore;
+
+    }
+
     // platform(s) generation
     public Main() {
         // JPanel default settings
@@ -385,7 +415,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
 
                 if (dogyPos < dogyPosOld) {
                     score += dogyPosOld - dogyPos;
-                    System.out.println(score);
+                    // System.out.println(score);
                 }
 
                 if (dogyPos >= 360 - 38) {
@@ -922,7 +952,10 @@ public class Main extends JPanel implements KeyListener, Runnable {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+
+        // Scanner inputFile = new Scanner(new File("culminating/hi.txt"));
+        PrintWriter OutputFile = new PrintWriter(new FileWriter("culminating/score.txt"));
 
         try {
             stateImages[0] = ImageIO.read(new File("culminating/assets/0menu.png"));
