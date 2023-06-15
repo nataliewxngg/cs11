@@ -799,13 +799,13 @@ public class Main extends JPanel implements KeyListener, Runnable {
         }
 
         else if (state == 1) { // credits
-            if (e.getKeyChar() == ' ') {
+            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                 state = 0; // return to menu
             }
         }
 
         else if (state == 2) { // rules
-            if (e.getKeyChar() == ' ') {
+            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                 state = 0; // return to menu
             }
         }
