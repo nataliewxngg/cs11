@@ -31,6 +31,8 @@ public class Main extends JPanel implements KeyListener, Runnable {
                                  // 6 - Game Over
     public static int idleSpriteNo = 0;
     public static int runSpriteNo = 0;
+    public static int waterSpriteNo = 0;
+
     public static int frameController = 0;
     public static int timer = 0;
 
@@ -41,6 +43,8 @@ public class Main extends JPanel implements KeyListener, Runnable {
     public static int landy;
     public static int[] landxCoords = new int[10];
     public static int[] landyCoords = { -150, -100, -50, 0, 50, 100, 150, 175, 200, 250 };
+
+    public static int wavey = 200;
 
     public static int dogPlatformIndex = -1;
     public static int catPlatformIndex = -1;
@@ -116,19 +120,9 @@ public class Main extends JPanel implements KeyListener, Runnable {
     public static BufferedImage[] catRun = new BufferedImage[6];
     public static BufferedImage[] catRunl = new BufferedImage[6];
 
+    public static BufferedImage[] water = new BufferedImage[3];
+
     public static BufferedImage arrow;
-
-    // public static int getHighScore(String txtFileName) throws IOException {
-
-    // Scanner inputFile = new Scanner(new File(txtFileName));
-    // int highscore;
-
-    // highscore = Integer.parseInt(inputFile.next());
-    // inputFile.close();
-
-    // return highscore;
-
-    // }
 
     public static int getNewHighScore(int score, String txtFileName) {
         try {
@@ -180,6 +174,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
             catxPos = 360;
             bgyPos = -700;
             moveUpFactor = 2;
+            wavey = 200;
 
             rightPressed = leftPressed = dogJumping = wPressed = aPressed = dPressed = catJumping = twoPlayers = dogOnPlatform = catOnPlatform = false;
             dogGravity = catVelocity = 3;
@@ -260,6 +255,11 @@ public class Main extends JPanel implements KeyListener, Runnable {
                         }
                     }
 
+                    if (wavey > 140) {
+                        wavey -= 2;
+                    } else
+                        wavey = 140;
+
                 } else {
                     bgyPos = -245;
                     timer += 1;
@@ -273,6 +273,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
             if (frameController == 4) { // for sprites
                 idleSpriteNo = (idleSpriteNo + 1) % 4;
                 runSpriteNo = (runSpriteNo + 1) % 6;
+                waterSpriteNo = (waterSpriteNo + 1) % 3;
                 frameController = 0;
             }
 
@@ -429,7 +430,10 @@ public class Main extends JPanel implements KeyListener, Runnable {
                     // System.out.println(score);
                 }
 
-                if (dogyPos >= 360 - 38) {
+                if (dogOnPlatform || catOnPlatform)
+                    g.drawImage(water[waterSpriteNo], 0, wavey, null);
+
+                if (dogyPos >= 270) {
                     state = 6;
                 }
 
@@ -692,7 +696,10 @@ public class Main extends JPanel implements KeyListener, Runnable {
                     System.out.println(score);
                 }
 
-                if (dogyPos >= 360 - 38 || catyPos >= 360 - 38) {
+                if (dogOnPlatform || catOnPlatform)
+                    g.drawImage(water[waterSpriteNo], 0, wavey, null);
+
+                if (dogyPos >= 270 || catyPos >= 270) {
                     state = 6;
                 }
             }
@@ -707,6 +714,8 @@ public class Main extends JPanel implements KeyListener, Runnable {
             catxPos = 360;
             bgyPos = -700;
             moveUpFactor = 2;
+
+            wavey = 200;
 
             rightPressed = leftPressed = dogJumping = wPressed = aPressed = dPressed = catJumping = dogOnPlatform = catOnPlatform = false;
             dogGravity = catVelocity = 3;
@@ -898,6 +907,8 @@ public class Main extends JPanel implements KeyListener, Runnable {
                 dogVelocity = catVelocity = -27;
                 score = 0;
 
+                wavey = 200;
+
                 for (int i = 0; i < 10; i++) {
                     if (i % 2 == 0)
                         landx = rand.nextInt(300, 600);
@@ -1037,6 +1048,11 @@ public class Main extends JPanel implements KeyListener, Runnable {
             catRunl[3] = ImageIO.read(new File("culminating/assets/sprites/cat/flipped/catRun3l.png"));
             catRunl[4] = ImageIO.read(new File("culminating/assets/sprites/cat/flipped/catRun4l.png"));
             catRunl[5] = ImageIO.read(new File("culminating/assets/sprites/cat/flipped/catRun5l.png"));
+
+            // water
+            water[0] = ImageIO.read(new File("culminating/assets/sprites/water/water0.png"));
+            water[1] = ImageIO.read(new File("culminating/assets/sprites/water/water1.png"));
+            water[2] = ImageIO.read(new File("culminating/assets/sprites/water/water2.png"));
 
         } catch (Exception e) {
             System.out.println("Something wrong with the image!");
