@@ -3,6 +3,9 @@ package culminating;
 // RULES: USED WAD OR ARROW KEYS TO NAVIGATE UPWARDS IN THE INFINITE VERTICAL PLATFORMER
 // ***** YOU CANNOT LAND BACK ON THE SAME PLATFORM AFTER JUMPING! 
 
+// score for 2 players is dependent on BOTH PLAYERS! both players 
+// must reach that score for it to be accumulated!
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -95,6 +98,8 @@ public class Main extends JPanel implements KeyListener, Runnable {
 
     // score
     public static int score = 0;
+    public static int score1 = 0;
+    public static int score2 = 0;
 
     // Buffered Images
     public static BufferedImage[] stateImages = new BufferedImage[7];
@@ -113,34 +118,36 @@ public class Main extends JPanel implements KeyListener, Runnable {
 
     public static BufferedImage arrow;
 
-    public static int getHighScore() throws IOException {
+    // public static int getHighScore(String txtFileName) throws IOException {
 
-        Scanner inputFile = new Scanner(new File("scores.txt"));
-        int highscore;
+    // Scanner inputFile = new Scanner(new File(txtFileName));
+    // int highscore;
 
-        highscore = Integer.parseInt(inputFile.next());
-        inputFile.close();
+    // highscore = Integer.parseInt(inputFile.next());
+    // inputFile.close();
 
-        return highscore;
+    // return highscore;
 
-    }
+    // }
 
-    public static int getNewHighScore(int score) throws IOException {
-        Scanner inputFile = new Scanner(new File("scores.txt"));
-        PrintWriter outputFile;
-        int highscore;
+    public static int getNewHighScore(int score, String txtFileName) {
+        try {
+            Scanner inputFile = new Scanner(new File("culminating/" + txtFileName));
+            int highscore = Integer.parseInt(inputFile.next());
 
-        highscore = Integer.parseInt(inputFile.next());
-        inputFile.close();
+            inputFile.close();
+            PrintWriter outputFile;
 
-        if (score > highscore) {
-            highscore = score;
-            outputFile = new PrintWriter(new FileWriter("scores.txt"));
-            outputFile.print(highscore);
-            outputFile.close();
+            if (score > highscore) {
+                highscore = score;
+                outputFile = new PrintWriter(new FileWriter("culminating/" + txtFileName));
+                outputFile.print(highscore);
+                outputFile.close();
+            }
+            return highscore;
+        } catch (Exception e) {
+            return 0;
         }
-        return highscore;
-
     }
 
     // platform(s) generation
@@ -161,7 +168,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
         super.paintComponent(g); // Clears the screen
         g.drawImage(stateImages[state], 0, 0, null);
 
-        Font font = new Font("Press Start 2P", Font.PLAIN, 30);
+        Font font = new Font("Press Start 2P", Font.PLAIN, 25);
         g.setFont(font);
         g.setColor(Color.WHITE);
 
@@ -218,23 +225,9 @@ public class Main extends JPanel implements KeyListener, Runnable {
 
             g.drawImage(stateImages[state], 0, bgyPos, null); // sky
 
-            if (bgyPos < 0) { // used to accumulate y pos of land and bg
-                // System.out.println(bgyPos);
-                // bgyPos += bgMoveUpFactor;
-                // bgMoveUpFactor += 0.005;
-                bgyPos += moveUpFactor;
-
-                dogyPos += moveUpFactor;
-                catyPos += moveUpFactor;
-
-                for (int i = 0; i < 10; i++) {
-                    landyCoords[i] += moveUpFactor;
-                }
-
-                dogOriginalyPos += moveUpFactor; // for jumping back on platform
-                catOriginalyPos += moveUpFactor;
-
-                while (dogyPos + 30 < 0) {
+            if (dogOnPlatform || catOnPlatform) {
+                if (bgyPos < 0) { // used to accumulate y pos of land and bg
+                    // System.out.println(bgyPos);
                     // bgyPos += bgMoveUpFactor;
                     // bgMoveUpFactor += 0.005;
                     bgyPos += moveUpFactor;
@@ -248,13 +241,31 @@ public class Main extends JPanel implements KeyListener, Runnable {
 
                     dogOriginalyPos += moveUpFactor; // for jumping back on platform
                     catOriginalyPos += moveUpFactor;
-                }
 
-            } else {
-                bgyPos = -245;
-                timer += 1;
-                if (timer % 5 == 0)
-                    moveUpFactor += 1;
+                    if (!twoPlayers) {
+                        while (dogyPos + 30 < 0) {
+                            // bgyPos += bgMoveUpFactor;
+                            // bgMoveUpFactor += 0.005;
+                            bgyPos += moveUpFactor;
+
+                            dogyPos += moveUpFactor;
+                            catyPos += moveUpFactor;
+
+                            for (int i = 0; i < 10; i++) {
+                                landyCoords[i] += moveUpFactor;
+                            }
+
+                            dogOriginalyPos += moveUpFactor; // for jumping back on platform
+                            catOriginalyPos += moveUpFactor;
+                        }
+                    }
+
+                } else {
+                    bgyPos = -245;
+                    timer += 1;
+                    if (timer % 5 == 0)
+                        moveUpFactor += 1;
+                }
             }
 
             frameController++;
@@ -673,10 +684,10 @@ public class Main extends JPanel implements KeyListener, Runnable {
                         g.drawImage(catIdle[idleSpriteNo], catxPos, catyPos, null);
                 }
 
-                if (dogyPos < dogyPosOld && dogyPos > catyPos) {
+                if (dogyPos < dogyPosOld && dogyPos >= catyPos) {
                     score += dogyPosOld - dogyPos;
                     System.out.println(score);
-                } else if (catyPos < catyPosOld && catyPos > dogyPos) {
+                } else if (catyPos < catyPosOld && catyPos >= dogyPos) {
                     score += catyPosOld - catyPos;
                     System.out.println(score);
                 }
@@ -700,7 +711,6 @@ public class Main extends JPanel implements KeyListener, Runnable {
             rightPressed = leftPressed = dogJumping = wPressed = aPressed = dPressed = catJumping = dogOnPlatform = catOnPlatform = false;
             dogGravity = catVelocity = 3;
             dogVelocity = catVelocity = -27;
-            score = 0;
 
             for (int i = 0; i < 10; i++) {
                 if (i % 2 == 0)
@@ -720,6 +730,14 @@ public class Main extends JPanel implements KeyListener, Runnable {
             landyCoords[7] = 175;
             landyCoords[8] = 200;
             landyCoords[9] = 250;
+
+            if (!twoPlayers) {
+                g.drawString("score: " + Integer.toString(score), 220, 150);
+                g.drawString("highscore: " + Integer.toString(getNewHighScore(score, "score1.txt")), 170, 180);
+            } else {
+                g.drawString("score: " + Integer.toString(score), 220, 150);
+                g.drawString("highscore: " + Integer.toString(getNewHighScore(score, "score2.txt")), 170, 180);
+            }
         }
     }
 
@@ -919,6 +937,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
             // reset all game variables here
             if (e.getKeyChar() == ' ') {
                 state = 4; // restart
+                score = 0;
             }
 
             else if (e.getKeyChar() == 'm') {
