@@ -17,6 +17,8 @@ import javax.imageio.ImageIO;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.sound.sampled.*;
+
 public class Main extends JPanel implements KeyListener, Runnable {
 
     // Global Variables
@@ -123,6 +125,9 @@ public class Main extends JPanel implements KeyListener, Runnable {
     public static BufferedImage[] water = new BufferedImage[3];
 
     public static BufferedImage arrow;
+
+    public static String music = "culminating/assets/music.wav";
+    public static String gameOver = "culminating/assets/gameOver.wav";
 
     public static int getNewHighScore(int score, String txtFileName) {
         try {
@@ -435,6 +440,8 @@ public class Main extends JPanel implements KeyListener, Runnable {
 
                 if (dogyPos >= 270) {
                     state = 6;
+                    PlayMusic(gameOver);
+                    // clip.stop();
                 }
 
             }
@@ -701,6 +708,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
 
                 if (dogyPos >= 270 || catyPos >= 270) {
                     state = 6;
+                    PlayMusic(gameOver);
                 }
             }
         }
@@ -946,6 +954,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
 
         else if (state == 6) { // game over
             // reset all game variables here
+
             if (e.getKeyChar() == ' ') {
                 state = 4; // restart
                 score = 0;
@@ -958,6 +967,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
                 menuArrowyPos = 80;
                 arrowState = 1;
             }
+
         }
 
     }
@@ -984,8 +994,7 @@ public class Main extends JPanel implements KeyListener, Runnable {
 
     public static void main(String[] args) throws IOException {
 
-        // Scanner inputFile = new Scanner(new File("culminating/hi.txt"));
-        PrintWriter OutputFile = new PrintWriter(new FileWriter("culminating/score.txt"));
+        LoopMusic(music);
 
         try {
             stateImages[0] = ImageIO.read(new File("culminating/assets/0menu.png"));
@@ -1090,6 +1099,43 @@ public class Main extends JPanel implements KeyListener, Runnable {
                 Thread.sleep(20);
             } catch (Exception e) {
             }
+        }
+    }
+
+    public static void PlayMusic(String location) {
+        try {
+            File musicPath = new File(location);
+
+            if (musicPath.exists()) {
+                AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
+                Clip clip1 = AudioSystem.getClip();
+                clip1.open(audioInput);
+                clip1.start();
+
+            } else {
+                System.out.println("Can't find file");
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public static void LoopMusic(String location) {
+        try {
+
+            File musicPath = new File(location);
+
+            if (musicPath.exists()) {
+                AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
+                Clip clip1 = AudioSystem.getClip();
+                clip1.open(audioInput);
+                clip1.loop(Clip.LOOP_CONTINUOUSLY);
+                clip1.start();
+            }
+
+        } catch (Exception e) {
+
         }
     }
 
