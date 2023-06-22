@@ -1,10 +1,10 @@
+import java.util.Scanner;
 import java.io.*;
 
 public class Main {
-  public static void main(String[] args) {
-    System.out.println(false + "hello");
-    System.out.println(true + "abc" + false);
+  public static void main(String[] args) throws IOException {
+    String s = "Wong Natalie";
+    System.out.println(s.substring(s.indexOf(" ") + 1) + " " + s.substring(0, s.indexOf(" ")));
 
-    System.out.println(true + true + "abc");
   }
 }

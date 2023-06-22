@@ -22,8 +22,8 @@ public class L6_textFileStreaming5 {
         String months = "JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDEC";
 
         // Month
-        int month = Integer.parseInt(s.substring(0,2));
-        output = months.substring((month*3)-3,month*3);
+        int month = Integer.parseInt(s.substring(0, 2)); // int of first two digits
+        output = months.substring((month * 3) - 3, month * 3);
 
         int date = Integer.parseInt(s.substring(2));
         output += " " + date;
@@ -37,7 +37,7 @@ public class L6_textFileStreaming5 {
         // Global Variables
         Scanner inputFile = new Scanner(new File("u4/assets/dates.txt"));
         PrintWriter outputFile = new PrintWriter(new FileWriter("u4/assets/dates2.txt"));
-        
+
         // Main Body Code
         while (inputFile.hasNextLine()) {
             outputFile.println(convertDate(inputFile.nextLine()));

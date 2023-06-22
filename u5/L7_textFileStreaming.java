@@ -20,7 +20,7 @@ import java.io.*;
 public class L7_textFileStreaming {
 
     public static void main(String[] args) throws IOException {
-        
+
         // Variables
         Scanner inputFile = new Scanner(new File("u5/assets/marksWithNames2.txt"));
         PrintWriter outputFile = new PrintWriter(new FileWriter("u5/assets/reportCard.txt"));
@@ -29,7 +29,7 @@ public class L7_textFileStreaming {
         double[] termArray = new double[24];
         double[] examArray = new double[24];
         double[] finalArray = new double[24];
-        double total = 0; 
+        double total = 0;
 
         // Main Body
         // Skip the first 2 lines in the text file
@@ -42,19 +42,19 @@ public class L7_textFileStreaming {
 
             termArray[i] = inputFile.nextDouble();
             examArray[i] = inputFile.nextDouble();
-            finalArray[i] = termArray[i]*0.7 + examArray[i]*0.3;
+            finalArray[i] = termArray[i] * 0.7 + examArray[i] * 0.3;
 
             total += finalArray[i];
-            
-            System.out.printf("%-15s%-15s%-15.1f%-15.1f%-15.1f%n", 
-            firstNameArray[i], lastNameArray[i], termArray[i], examArray[i], finalArray[i]);
 
-            outputFile.printf("%-15s%-15s%-15.1f%-15.1f%-15.1f%n", 
-            firstNameArray[i], lastNameArray[i], termArray[i], examArray[i], finalArray[i]);
+            System.out.printf("%-15s%-15s%-15.1f%-15.1f%-15.1f%n",
+                    firstNameArray[i], lastNameArray[i], termArray[i], examArray[i], finalArray[i]);
+
+            outputFile.printf("%-15s%-15s%-15.1f%-15.1f%-15.1f%n",
+                    firstNameArray[i], lastNameArray[i], termArray[i], examArray[i], finalArray[i]);
         }
 
-        System.out.printf("Average: %.1f", total/24);
-        outputFile.printf("Average: %.1f", total/24);
+        System.out.printf("Average: %.1f", total / 24);
+        outputFile.printf("Average: %.1f", total / 24);
         inputFile.close();
         outputFile.close();
 
